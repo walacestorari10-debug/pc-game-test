@@ -378,7 +378,11 @@ function ResultContent({ setup, selectedResult }) {
       status: result.status,
     }
   })
-  const recommendedUpgrades = getUpgradeRecommendations(selectedResult.bottleneck)
+  const recommendedUpgrades = getUpgradeRecommendations(
+    selectedResult.bottleneck,
+    setup,
+    selectedResult,
+  )
 
   useEffect(() => {
     const frame = requestAnimationFrame(() => setAreBarsAnimated(true))

@@ -6,9 +6,10 @@ import {
 } from '../data/upgradeRecommendations'
 
 function RecommendedUpgrades({ setupResult }) {
+  const setup = setupResult?.setup
   const result = setupResult?.result
   const upgrades = result
-    ? getUpgradeRecommendations(result.bottleneck)
+    ? getUpgradeRecommendations(result.bottleneck, setup, result)
     : upgradeRecommendations.balanced
 
   return (

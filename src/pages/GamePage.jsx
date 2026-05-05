@@ -424,7 +424,7 @@ function GamePage() {
   const maxFps = Math.max(...fpsRows.map((row) => row.value), 1)
   const relatedGames = getRelatedGames(game)
   const upgradeRecommendations = hasSetupResult
-    ? getUpgradeRecommendations(result.bottleneck)
+    ? getUpgradeRecommendations(result.bottleneck, savedSetup, result)
     : getGenericUpgrades(game)
   const heroClassName = ['game-hero', game.heroClassName].filter(Boolean).join(' ')
   const seoTitle = `PC roda ${game.name}? Veja FPS e requisitos | PC Game Test`

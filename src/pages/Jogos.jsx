@@ -97,7 +97,7 @@ function GameLibraryCard({ game, result, savedSetup }) {
   const statusClass = demandStatus[game.demandLevel] ?? 'is-medium'
   const resultStatusClass = result ? performanceStatus[result.status] : ''
   const recommendedUpgrade = result
-    ? getUpgradeRecommendations(result.bottleneck)[0]
+    ? getUpgradeRecommendations(result.bottleneck, savedSetup, result)[0]
     : null
   const cardClassName = ['jogos-card', statusClass, resultStatusClass]
     .filter(Boolean)
