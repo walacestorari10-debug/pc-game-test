@@ -1,12 +1,13 @@
 import { useEffect, useId, useMemo, useRef, useState } from 'react'
 
-const maxResults = 8
+const maxResults = 20
 
 function normalizeSearch(value) {
   return String(value)
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
     .toLowerCase()
+    .replace(/[^a-z0-9]+/g, ' ')
     .replace(/\s+/g, ' ')
     .trim()
 }
@@ -76,8 +77,14 @@ function HardwareSearchInput({
           .filter(Boolean)
           .join(' ')
       const searchText = normalizeSearch(rawSearchText)
+      const compactSearchText = searchText.replace(/\s/g, '')
+      const compactQuery = normalizedQuery.replace(/\s/g, '')
 
-      return !normalizedQuery || searchText.includes(normalizedQuery)
+      return (
+        !normalizedQuery ||
+        searchText.includes(normalizedQuery) ||
+        compactSearchText.includes(compactQuery)
+      )
     })
 
     return matches.slice(0, maxResults)
