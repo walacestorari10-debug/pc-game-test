@@ -123,7 +123,7 @@ function GameLibraryCard({ game, result, savedSetup }) {
 
         <dl className="jogos-card-meta">
           <div>
-            <dt>{result ? 'FPS estimado' : 'FPS base'}</dt>
+            <dt>{result ? 'FPS estimado' : 'Referência 1080p'}</dt>
             <dd>
               {result
                 ? `${result.fpsRange.min}-${result.fpsRange.max}`
@@ -131,12 +131,12 @@ function GameLibraryCard({ game, result, savedSetup }) {
             </dd>
           </div>
           <div>
-            <dt>{result ? 'Qualidade' : 'Meta'}</dt>
-            <dd>{result ? result.idealQuality : game.recommendedFps}</dd>
+            <dt>{result ? 'Qualidade' : 'Meta ideal'}</dt>
+            <dd>{result ? result.idealQuality : `${game.recommendedFps} FPS`}</dd>
           </div>
         </dl>
 
-        {result && (
+        {result ? (
           <div className="jogos-personalized-panel">
             <div>
               <span>Gargalo</span>
@@ -151,6 +151,10 @@ function GameLibraryCard({ game, result, savedSetup }) {
               {result.averageFps} FPS médio
             </small>
           </div>
+        ) : (
+          <p className="jogos-reference-note">
+            Valores de referência do jogo. Faça o teste para ver o FPS do seu PC.
+          </p>
         )}
 
         <Link className="jogos-card-button" to={getGameUrl(game)}>
@@ -208,7 +212,7 @@ function JogosContent({ initialSearchTerm }) {
             <p>
               {savedSetup
                 ? 'Veja FPS estimado, gargalos e upgrades sugeridos para o seu setup salvo.'
-                : 'Veja se seu PC roda os principais jogos e confira FPS estimado, requisitos e recomendações.'}
+                : 'Confira referências de FPS, metas e requisitos dos jogos. Faça o teste para ver o resultado do seu PC.'}
             </p>
           </div>
         </section>
@@ -224,6 +228,20 @@ function JogosContent({ initialSearchTerm }) {
               gargalos em cada jogo.
             </p>
             <Link to="/teste">Atualizar setup</Link>
+          </section>
+        )}
+
+        {!savedSetup && (
+          <section className="jogos-reference-status" aria-label="Aviso sobre valores de referência">
+            <div>
+              <span>Referência geral</span>
+              <strong>Sem setup conectado</strong>
+            </div>
+            <p>
+              Os FPS exibidos nos cards são referências dos jogos em 1080p.
+              Faça o teste para calcular FPS, gargalo e qualidade ideal para o seu PC.
+            </p>
+            <Link to="/teste">Testar meu PC</Link>
           </section>
         )}
 
