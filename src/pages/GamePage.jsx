@@ -5,6 +5,7 @@ import FeedbackWidget from '../components/FeedbackWidget'
 import Footer from '../components/Footer'
 import Header from '../components/Header'
 import SEOHead from '../components/SEOHead'
+import { withAmazonAffiliateLinks } from '../data/affiliateLinks'
 import { games, getGameBySlug } from '../data/games'
 import { getUpgradeRecommendations } from '../data/upgradeRecommendations'
 import { calculatePcPerformance } from '../utils/performanceEngine'
@@ -93,6 +94,7 @@ const genericUpgradeRecommendations = {
   pesado: [
     {
       name: 'RTX 4060 ou RX 6700 XT',
+      affiliateKey: 'RTX 4060',
       type: 'GPU',
       expectedGain: 'Presets altos',
       description:
@@ -123,6 +125,7 @@ const genericUpgradeRecommendations = {
     },
     {
       name: 'Ryzen 5 5600 / i5-12400F',
+      affiliateKey: 'AMD Ryzen 5 5600',
       type: 'CPU',
       expectedGain: 'Menos quedas',
       description:
@@ -206,7 +209,10 @@ function getRelatedGames(currentGame) {
 }
 
 function getGenericUpgrades(game) {
-  return genericUpgradeRecommendations[game.demandLevel] ?? genericUpgradeRecommendations.medio
+  return withAmazonAffiliateLinks(
+    genericUpgradeRecommendations[game.demandLevel] ??
+      genericUpgradeRecommendations.medio,
+  )
 }
 
 function syncResultGame(setup, gameSlug) {

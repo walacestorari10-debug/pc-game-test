@@ -1,3 +1,5 @@
+import { withAmazonAffiliateLinks } from './affiliateLinks'
+
 export const articleProductRecommendations = {
   'como-aumentar-fps-em-jogos': {
     title: 'Upgrades que podem ajudar no FPS',
@@ -218,5 +220,14 @@ export const articleProductRecommendations = {
 }
 
 export function getArticleProductRecommendations(slug) {
-  return articleProductRecommendations[slug] ?? null
+  const recommendations = articleProductRecommendations[slug]
+
+  if (!recommendations) {
+    return null
+  }
+
+  return {
+    ...recommendations,
+    items: withAmazonAffiliateLinks(recommendations.items),
+  }
 }

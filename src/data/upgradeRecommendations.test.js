@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest'
+import { getArticleProductRecommendations } from './articleProductRecommendations'
 import { getUpgradeRecommendations } from './upgradeRecommendations'
+import { withAmazonAffiliateLinks } from './affiliateLinks'
 
 const weakGpuSetup = {
   cpu: 'Intel Core i5-12400F',
@@ -41,15 +43,52 @@ describe('getUpgradeRecommendations', () => {
     expect(upgrades.every((upgrade) => upgrade.type === 'GPU')).toBe(true)
   })
 
-  it('keeps the real Amazon link for SSD NVMe 1TB and pending links for the rest', () => {
+  it('keeps real Amazon links for registered SSDs and pending links for the rest', () => {
     const upgrades = getUpgradeRecommendations('Armazenamento', hdSetup)
+    const sataUpgrade = upgrades.find((upgrade) => upgrade.name === 'SSD SATA 1TB')
     const nvmeUpgrade = upgrades.find((upgrade) => upgrade.name === 'SSD NVMe 1TB')
-    const pendingUpgrades = upgrades.filter((upgrade) => upgrade.name !== 'SSD NVMe 1TB')
+    const linkedNames = ['SSD SATA 1TB', 'SSD NVMe 1TB']
+    const pendingUpgrades = upgrades.filter(
+      (upgrade) => !linkedNames.includes(upgrade.name),
+    )
 
+    expect(sataUpgrade).toMatchObject({
+      link: 'https://amzn.to/49wIywy',
+      isAffiliatePending: false,
+    })
     expect(nvmeUpgrade).toMatchObject({
       link: 'https://amzn.to/4d5DHDv',
       isAffiliatePending: false,
     })
     expect(pendingUpgrades.every((upgrade) => upgrade.link === '#')).toBe(true)
+  })
+
+  it('reuses the same affiliate link outside the main upgrade list', () => {
+    const genericItems = withAmazonAffiliateLinks([
+      { name: 'SSD NVMe 1TB' },
+      { name: 'SSD SATA 1TB' },
+      { name: 'RTX 4060' },
+    ])
+    const articleRecommendations = getArticleProductRecommendations('ssd-vs-hd')
+    const articleSsd = articleRecommendations.items.find(
+      (item) => item.name === 'SSD NVMe 1TB',
+    )
+
+    expect(genericItems[0]).toMatchObject({
+      link: 'https://amzn.to/4d5DHDv',
+      isAffiliatePending: false,
+    })
+    expect(genericItems[1]).toMatchObject({
+      link: 'https://amzn.to/49wIywy',
+      isAffiliatePending: false,
+    })
+    expect(genericItems[2]).toMatchObject({
+      link: '#',
+      isAffiliatePending: true,
+    })
+    expect(articleSsd).toMatchObject({
+      link: 'https://amzn.to/4d5DHDv',
+      isAffiliatePending: false,
+    })
   })
 })

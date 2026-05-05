@@ -1,7 +1,10 @@
-import { affiliateLinks } from './affiliateLinks'
+import {
+  affiliateLinkFallback,
+  getAmazonAffiliateLink,
+  withAmazonAffiliateLinks,
+} from './affiliateLinks'
 import { cpus, gpus, ram, storage } from './hardware'
 
-const fallbackAffiliateLink = '#'
 const tierLabels = {
   entry: 'entrada',
   mid: 'intermediário',
@@ -93,22 +96,6 @@ const smartCandidateNames = {
 }
 
 const smartUpgradeLevels = ['Upgrade seguro', 'Salto equilibrado', 'Salto forte']
-
-function getAffiliateLink(upgradeName) {
-  return affiliateLinks[upgradeName]?.amazon ?? fallbackAffiliateLink
-}
-
-function withAffiliateLinks(upgrades) {
-  return upgrades.map((upgrade) => {
-    const link = getAffiliateLink(upgrade.name)
-
-    return {
-      ...upgrade,
-      link,
-      isAffiliatePending: link === fallbackAffiliateLink,
-    }
-  })
-}
 
 function findHardwarePart(catalog, name) {
   return catalog.find((part) => part.name === name) ?? null
@@ -224,7 +211,7 @@ function getSmartDescription(componentKey, currentPart, candidate, index) {
 function createSmartUpgrade(componentKey, candidate, currentPart, index) {
   const config = componentConfigs[componentKey]
   const currentScore = currentPart?.score ?? 0
-  const link = getAffiliateLink(candidate.name)
+  const link = getAmazonAffiliateLink(candidate.name)
 
   return {
     name: candidate.name,
@@ -234,7 +221,7 @@ function createSmartUpgrade(componentKey, candidate, currentPart, index) {
     tier: candidate.tier,
     currentHardware: currentPart?.name,
     link,
-    isAffiliatePending: link === fallbackAffiliateLink,
+    isAffiliatePending: link === affiliateLinkFallback,
   }
 }
 
@@ -468,7 +455,7 @@ const baseUpgradeRecommendations = {
 export const upgradeRecommendations = Object.fromEntries(
   Object.entries(baseUpgradeRecommendations).map(([group, upgrades]) => [
     group,
-    withAffiliateLinks(upgrades),
+    withAmazonAffiliateLinks(upgrades),
   ]),
 )
 
