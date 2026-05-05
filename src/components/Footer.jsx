@@ -50,6 +50,10 @@ function Footer() {
         </div>
       ))}
 
+      <small className="amazon-disclosure">
+        Como associado da Amazon, posso ganhar comissões por compras qualificadas.
+      </small>
+
       <small className="copyright">
         © 2026 PC Game Test. Todos os direitos reservados.
       </small>

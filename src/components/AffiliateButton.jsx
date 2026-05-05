@@ -1,13 +1,14 @@
 import { useState } from 'react'
 
-const defaultPendingMessage = 'Links de compra estarão disponíveis em breve.'
+const defaultPendingMessage = 'Link em breve.'
 
 function AffiliateButton({
-  children = 'Ver preço',
+  children = 'Ver preço na Amazon',
   className = '',
   link = '#',
   isAffiliatePending = false,
   pendingMessage = defaultPendingMessage,
+  pendingLabel = 'Link em breve',
 }) {
   const [showMessage, setShowMessage] = useState(false)
   const isPending = isAffiliatePending || !link || link === '#'
@@ -20,7 +21,7 @@ function AffiliateButton({
           type="button"
           onClick={() => setShowMessage(true)}
         >
-          {children}
+          {pendingLabel}
         </button>
         {showMessage && (
           <small className="affiliate-feedback" role="status">
@@ -36,7 +37,7 @@ function AffiliateButton({
       className={className}
       href={link}
       target="_blank"
-      rel="sponsored noopener noreferrer"
+      rel="nofollow sponsored noopener noreferrer"
     >
       {children}
     </a>

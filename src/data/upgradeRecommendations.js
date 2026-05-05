@@ -1,4 +1,24 @@
-export const upgradeRecommendations = {
+import { affiliateLinks } from './affiliateLinks'
+
+const fallbackAffiliateLink = '#'
+
+function getAffiliateLink(upgradeName) {
+  return affiliateLinks[upgradeName]?.amazon ?? fallbackAffiliateLink
+}
+
+function withAffiliateLinks(upgrades) {
+  return upgrades.map((upgrade) => {
+    const link = getAffiliateLink(upgrade.name)
+
+    return {
+      ...upgrade,
+      link,
+      isAffiliatePending: link === fallbackAffiliateLink,
+    }
+  })
+}
+
+const baseUpgradeRecommendations = {
   'Placa de vídeo': [
     {
       name: 'RTX 3060 12GB',
@@ -145,6 +165,13 @@ export const upgradeRecommendations = {
     },
   ],
 }
+
+export const upgradeRecommendations = Object.fromEntries(
+  Object.entries(baseUpgradeRecommendations).map(([group, upgrades]) => [
+    group,
+    withAffiliateLinks(upgrades),
+  ]),
+)
 
 export function getUpgradeRecommendations(bottleneck) {
   return upgradeRecommendations[bottleneck] ?? upgradeRecommendations.balanced
