@@ -1,4 +1,5 @@
 const storagePrefix = 'pcGameTestFeedbackSent'
+export const feedbackSentEvent = 'pcGameTestFeedbackSentUpdated'
 
 function getStorageKey(pathname) {
   return `${storagePrefix}:${pathname || '/'}`
@@ -23,6 +24,11 @@ export function saveFeedbackSent(pathname) {
 
   try {
     localStorage.setItem(getStorageKey(pathname), new Date().toISOString())
+    window.dispatchEvent(
+      new CustomEvent(feedbackSentEvent, {
+        detail: { pathname: pathname || '/' },
+      }),
+    )
   } catch {
     // Feedback was already saved; local anti-spam is best-effort.
   }

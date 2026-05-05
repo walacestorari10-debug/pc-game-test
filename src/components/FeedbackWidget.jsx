@@ -1,7 +1,11 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { supabase } from '../lib/supabaseClient'
-import { hasFeedbackSent, saveFeedbackSent } from '../utils/feedbackStorage'
+import {
+  feedbackSentEvent,
+  hasFeedbackSent,
+  saveFeedbackSent,
+} from '../utils/feedbackStorage'
 import '../styles/feedbackWidget.css'
 
 function FeedbackSuccessAnimation() {
@@ -43,6 +47,29 @@ function FeedbackWidgetContent({ className = '', onSubmitted, pathname }) {
   const [status, setStatus] = useState(() =>
     hasFeedbackSent(pathname) ? 'submitted' : 'idle',
   )
+
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return undefined
+    }
+
+    const syncSubmittedStatus = (event) => {
+      const submittedPathname = event?.detail?.pathname
+
+      if (
+        (!submittedPathname || submittedPathname === pathname) &&
+        hasFeedbackSent(pathname)
+      ) {
+        setStatus('submitted')
+      }
+    }
+
+    window.addEventListener(feedbackSentEvent, syncSubmittedStatus)
+
+    return () => {
+      window.removeEventListener(feedbackSentEvent, syncSubmittedStatus)
+    }
+  }, [pathname])
 
   const handleSelect = (type) => {
     setSelectedType(type)

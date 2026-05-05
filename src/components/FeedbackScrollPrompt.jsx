@@ -39,6 +39,7 @@ function FeedbackScrollPromptContent({ pathname, threshold }) {
     return isPromptDismissed(pathname) || hasFeedbackSent(pathname)
   })
   const [isVisible, setIsVisible] = useState(false)
+  const [isSubmittedHere, setIsSubmittedHere] = useState(false)
 
   useEffect(() => {
     if (isClosed || typeof window === 'undefined') {
@@ -46,17 +47,17 @@ function FeedbackScrollPromptContent({ pathname, threshold }) {
     }
 
     const handleScroll = () => {
-      if (hasFeedbackSent(pathname)) {
+      if (hasFeedbackSent(pathname) && !isSubmittedHere) {
         setIsClosed(true)
         setIsVisible(false)
         return
       }
 
       const page = document.documentElement
-      const distanceToBottom = page.scrollHeight - (window.scrollY + window.innerHeight)
-      const hasScrollableContent = page.scrollHeight > window.innerHeight + threshold
+      const hasScrollableContent = page.scrollHeight > window.innerHeight + 80
+      const scrollTrigger = window.innerHeight * threshold
 
-      if (hasScrollableContent && distanceToBottom <= threshold) {
+      if (hasScrollableContent && window.scrollY >= scrollTrigger) {
         setIsVisible(true)
       }
     }
@@ -70,7 +71,7 @@ function FeedbackScrollPromptContent({ pathname, threshold }) {
       window.removeEventListener('scroll', handleScroll)
       window.removeEventListener('resize', handleScroll)
     }
-  }, [isClosed, pathname, threshold])
+  }, [isClosed, isSubmittedHere, pathname, threshold])
 
   const closePrompt = () => {
     savePromptDismissed(pathname)
@@ -79,6 +80,7 @@ function FeedbackScrollPromptContent({ pathname, threshold }) {
   }
 
   const closeAfterThanks = () => {
+    setIsSubmittedHere(true)
     window.setTimeout(closePrompt, 2600)
   }
 
@@ -105,7 +107,7 @@ function FeedbackScrollPromptContent({ pathname, threshold }) {
   )
 }
 
-function FeedbackScrollPrompt({ threshold = 420 }) {
+function FeedbackScrollPrompt({ threshold = 0.5 }) {
   const { pathname } = useLocation()
 
   return (

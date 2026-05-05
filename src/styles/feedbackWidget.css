@@ -368,6 +368,7 @@
   left: 50%;
   z-index: 80;
   width: min(92vw, 600px);
+  max-height: calc(100vh - 32px);
   transform: translate(-50%, -50%);
   animation: feedbackPromptIn 180ms ease-out;
 }
@@ -493,9 +494,16 @@
   }
 
   .feedback-scroll-prompt {
-    top: auto;
-    bottom: 18px;
-    transform: translateX(-50%);
+    top: 50%;
+    bottom: auto;
+    width: min(94vw, 600px);
+    overflow-y: auto;
+    transform: translate(-50%, -50%);
+  }
+
+  .feedback-scroll-prompt-close {
+    top: 8px;
+    right: 8px;
   }
 
   .feedback-widget.is-floating {
@@ -513,17 +521,5 @@
   .feedback-success-bars {
     grid-template-columns: repeat(4, minmax(24px, 1fr));
     width: min(100%, 176px);
-  }
-
-  @keyframes feedbackPromptIn {
-    from {
-      opacity: 0;
-      transform: translate(-50%, 16px);
-    }
-
-    to {
-      opacity: 1;
-      transform: translate(-50%, 0);
-    }
   }
 }
