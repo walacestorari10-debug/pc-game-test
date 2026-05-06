@@ -7,20 +7,24 @@ const currentDate = new Date().toISOString().slice(0, 10)
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const publicDir = path.join(projectRoot, 'public')
 
-const requestedRoutes = [
+const publicStaticRoutes = [
   '/',
-  '/hardware',
-  '/perifericos',
-  '/setup-gamer',
-  '/monitores',
-  '/notebooks',
-  '/cadeiras-gamer',
+  '/teste',
+  '/jogos',
+  '/artigos',
+  '/upgrades',
+  '/promocoes',
+  '/como-funciona',
   '/contato',
-  '/sobre',
+  '/perguntas-frequentes',
+  '/politica-de-privacidade',
+  '/termos-de-uso',
 ]
 
-const nonIndexableRoutes = new Set([
+const excludedRoutes = new Set([
+  '/admin-feedbacks',
   '/analise',
+  '/comparar',
   '/gamezone',
   '/historico',
   '/pc-roda-apex',
@@ -28,6 +32,7 @@ const nonIndexableRoutes = new Set([
   '/pc-roda-cyberpunk',
   '/pc-roda-elden',
   '/pc-roda-rdr2',
+  '/ranking',
   '/resultado',
 ])
 
@@ -63,41 +68,29 @@ function normalizeRoute(route) {
 function addRoute(routes, route) {
   const normalizedRoute = normalizeRoute(route)
 
-  if (!normalizedRoute || nonIndexableRoutes.has(normalizedRoute)) {
+  if (!normalizedRoute || excludedRoutes.has(normalizedRoute)) {
     return
   }
 
   routes.add(normalizedRoute)
 }
 
-function extractLiteralRoutesFromApp() {
-  const appSource = readSource('src/App.jsx')
-  const routes = new Set()
-
-  for (const match of appSource.matchAll(/['"`](\/[^'"`]*)['"`]/g)) {
-    addRoute(routes, match[1])
-  }
-
-  return routes
-}
-
-function extractStaticPageRoutes() {
-  const staticPagesSource = readSource('src/data/staticPages.js')
-  const routes = new Set()
-
-  for (const match of staticPagesSource.matchAll(/path:\s*['"`]([^'"`]+)['"`]/g)) {
-    addRoute(routes, match[1])
-  }
-
-  return routes
-}
-
 function extractArticleRoutes() {
   const articlesSource = readSource('src/data/articles.js')
-  const routes = new Set(['/artigos'])
+  const articleSlugs = new Set()
 
   for (const match of articlesSource.matchAll(/slug:\s*['"`]([^'"`]+)['"`]/g)) {
-    addRoute(routes, `/artigos/${match[1]}`)
+    articleSlugs.add(match[1])
+  }
+
+  const routes = new Set()
+
+  for (const route of articleRoutes) {
+    const slug = route.replace('/artigos/', '')
+
+    if (articleSlugs.has(slug)) {
+      addRoute(routes, route)
+    }
   }
 
   return routes
@@ -105,7 +98,7 @@ function extractArticleRoutes() {
 
 function extractCanonicalGameRoutes() {
   const gamesSource = readSource('src/data/games.js')
-  const routes = new Set(['/jogos'])
+  const routes = new Set()
 
   for (const match of gamesSource.matchAll(/slug:\s*['"`]([^'"`]+)['"`]/g)) {
     addRoute(routes, `/pc-roda-${match[1]}`)
@@ -141,32 +134,6 @@ function escapeXml(value) {
 
 function createSitemap(routes) {
   const urls = [...routes]
-    .sort((first, second) => {
-      if (first === '/') {
-        return -1
-      }
-
-      if (second === '/') {
-        return 1
-      }
-
-      const firstArticleIndex = articleRoutes.indexOf(first)
-      const secondArticleIndex = articleRoutes.indexOf(second)
-
-      if (firstArticleIndex !== -1 || secondArticleIndex !== -1) {
-        if (firstArticleIndex === -1) {
-          return 1
-        }
-
-        if (secondArticleIndex === -1) {
-          return -1
-        }
-
-        return firstArticleIndex - secondArticleIndex
-      }
-
-      return first.localeCompare(second)
-    })
     .map((route) => {
       if (articleRouteSet.has(route)) {
         return `<url>
@@ -202,22 +169,17 @@ Sitemap: ${baseUrl}/sitemap.xml
 `
 }
 
-const discoveredRoutes = new Set([
-  ...extractLiteralRoutesFromApp(),
-  ...extractStaticPageRoutes(),
-  ...extractArticleRoutes(),
-  ...extractCanonicalGameRoutes(),
-])
-
 const sitemapRoutes = new Set()
 
-for (const route of requestedRoutes) {
-  if (discoveredRoutes.has(route)) {
-    addRoute(sitemapRoutes, route)
-  }
+for (const route of publicStaticRoutes) {
+  addRoute(sitemapRoutes, route)
 }
 
-for (const route of discoveredRoutes) {
+for (const route of extractCanonicalGameRoutes()) {
+  addRoute(sitemapRoutes, route)
+}
+
+for (const route of extractArticleRoutes()) {
   addRoute(sitemapRoutes, route)
 }
 
