@@ -14,6 +14,9 @@ export const affiliateLinks = {
   'Intel Core i5-12400F': {
     amazon: 'https://amzn.to/4wbrHsP',
   },
+  'Cooler para CPU': {
+    amazon: 'https://amzn.to/4tUsQDC',
+  },
   'RTX 4060': {
     amazon: 'https://amzn.to/42d1som',
   },
@@ -40,6 +43,9 @@ export const affiliateLinks = {
   },
   '16GB de RAM': {
     amazon: 'https://amzn.to/4n8j8Lm',
+  },
+  'RAM em dual channel': {
+    amazon: 'https://amzn.to/4daFwPO',
   },
   '16GB DDR4': {
     amazon: 'https://amzn.to/49vrneN',
