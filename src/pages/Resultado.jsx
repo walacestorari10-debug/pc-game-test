@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import FeedbackScrollPrompt from '../components/FeedbackScrollPrompt'
 import AffiliateButton from '../components/AffiliateButton'
 import FeedbackWidget from '../components/FeedbackWidget'
+import FpsEstimateNotice from '../components/FpsEstimateNotice'
 import Footer from '../components/Footer'
 import Header from '../components/Header'
 import SEOHead from '../components/SEOHead'
@@ -476,6 +477,7 @@ function ResultContent({ setup, selectedResult }) {
                   <ScoreStat label={label} value={value} key={label} />
                 ))}
               </div>
+              <FpsEstimateNotice className="resultado-fps-note" />
             </div>
           </section>
 
@@ -515,6 +517,7 @@ function ResultContent({ setup, selectedResult }) {
                 <GameFpsCard game={game} key={game.name} />
               ))}
             </div>
+            <FpsEstimateNotice className="resultado-games-fps-note" />
           </section>
 
           <section

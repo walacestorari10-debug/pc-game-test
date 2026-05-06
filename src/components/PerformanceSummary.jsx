@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import FpsEstimateNotice from './FpsEstimateNotice'
 
 function getStatusColor(status) {
   if (status === 'Ótimo') {
@@ -141,6 +142,7 @@ function PerformanceSummary({ setupResult }) {
               <strong>{result.status}</strong>
             </div>
           </div>
+          <FpsEstimateNotice className="performance-fps-note" />
           <Link className="ghost-button" to="/resultado">
             Ver resultado completo
           </Link>

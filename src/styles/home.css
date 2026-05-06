@@ -1049,6 +1049,11 @@
   overflow-wrap: anywhere;
 }
 
+.performance-fps-note {
+  max-width: 460px;
+  margin: -8px 0 22px;
+}
+
 .ghost-button {
   display: inline-flex;
   align-items: center;

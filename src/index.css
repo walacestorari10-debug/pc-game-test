@@ -53,6 +53,63 @@ a {
   line-height: 1.35;
 }
 
+.fps-estimate-note {
+  display: grid;
+  gap: 8px;
+  padding: 12px 14px;
+  border: 1px solid rgba(96, 165, 250, 0.24);
+  border-radius: 14px;
+  background:
+    linear-gradient(135deg, rgba(59, 130, 246, 0.1), transparent 58%),
+    rgba(15, 23, 42, 0.66);
+  color: #cbd5e1;
+  font-size: 12px;
+  font-weight: 650;
+  line-height: 1.45;
+}
+
+.fps-estimate-note-main {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.fps-estimate-info-button {
+  display: grid;
+  flex: 0 0 auto;
+  width: 24px;
+  height: 24px;
+  place-items: center;
+  border: 1px solid rgba(125, 211, 252, 0.42);
+  border-radius: 50%;
+  background: rgba(14, 165, 233, 0.13);
+  color: #bfdbfe;
+  font-size: 13px;
+  font-weight: 950;
+  line-height: 1;
+  transition:
+    border-color 180ms ease,
+    background 180ms ease,
+    transform 180ms ease;
+}
+
+.fps-estimate-info-button:hover,
+.fps-estimate-info-button[aria-expanded="true"] {
+  border-color: rgba(34, 211, 238, 0.62);
+  background: rgba(14, 165, 233, 0.22);
+  transform: translateY(-1px);
+}
+
+.fps-estimate-info-button:focus-visible {
+  outline: 3px solid rgba(59, 130, 246, 0.42);
+  outline-offset: 3px;
+}
+
+.fps-estimate-note-detail {
+  margin-left: 34px;
+  color: #93c5fd;
+}
+
 .site-footer .amazon-disclosure {
   grid-column: 1 / -1;
   margin: 0;

@@ -647,6 +647,10 @@
   line-height: 1;
 }
 
+.resultado-fps-note {
+  margin-top: 18px;
+}
+
 .resultado-components-card {
   grid-column: span 5;
   padding: 28px;
@@ -707,6 +711,10 @@
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 14px;
+}
+
+.resultado-games-fps-note {
+  margin-top: 16px;
 }
 
 .resultado-game-card {
