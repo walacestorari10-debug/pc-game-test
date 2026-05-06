@@ -416,15 +416,16 @@
   isolation: isolate;
   display: flex;
   align-items: center;
+  aspect-ratio: 1600 / 756;
   min-height: 380px;
   padding: 60px;
   overflow: hidden;
   border: 1px solid rgba(216, 180, 254, 0.34);
   border-radius: 16px;
   background-color: #070b12;
-  background-position: center right;
+  background-position: center, center right;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: 100% 100%, contain;
   box-shadow:
     0 0 72px rgba(124, 58, 237, 0.38),
     0 18px 60px rgba(0, 0, 0, 0.34),
@@ -1818,7 +1819,7 @@
   }
 
   .hero-section {
-    background-position: center right;
+    background-position: center, center right;
   }
 
   .hero-content {
@@ -1954,7 +1955,7 @@
   .hero-section {
     min-height: 320px;
     padding: 32px 22px;
-    background-position: center;
+    background-position: center, center;
   }
 
   .hero-content {
