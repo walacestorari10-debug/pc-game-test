@@ -47,7 +47,8 @@ describe('getUpgradeRecommendations', () => {
     const upgrades = getUpgradeRecommendations('Armazenamento', hdSetup)
     const sataUpgrade = upgrades.find((upgrade) => upgrade.name === 'SSD SATA 1TB')
     const nvmeUpgrade = upgrades.find((upgrade) => upgrade.name === 'SSD NVMe 1TB')
-    const linkedNames = ['SSD SATA 1TB', 'SSD NVMe 1TB']
+    const nvme2tbUpgrade = upgrades.find((upgrade) => upgrade.name === 'SSD NVMe 2TB')
+    const linkedNames = ['SSD SATA 1TB', 'SSD NVMe 1TB', 'SSD NVMe 2TB']
     const pendingUpgrades = upgrades.filter(
       (upgrade) => !linkedNames.includes(upgrade.name),
     )
@@ -60,6 +61,10 @@ describe('getUpgradeRecommendations', () => {
       link: 'https://amzn.to/4d5DHDv',
       isAffiliatePending: false,
     })
+    expect(nvme2tbUpgrade).toMatchObject({
+      link: 'https://amzn.to/3ONO7Ql',
+      isAffiliatePending: false,
+    })
     expect(pendingUpgrades.every((upgrade) => upgrade.link === '#')).toBe(true)
   })
 
@@ -67,6 +72,13 @@ describe('getUpgradeRecommendations', () => {
     const genericItems = withAmazonAffiliateLinks([
       { name: 'SSD NVMe 1TB' },
       { name: 'SSD SATA 1TB' },
+      { name: 'SSD NVMe 2TB' },
+      { name: '16GB DDR4 3200MHz' },
+      { name: 'Kit 16GB DDR4' },
+      { name: '32GB DDR4 3200MHz' },
+      { name: 'Kit 32GB DDR4' },
+      { name: '32GB DDR5' },
+      { name: 'Kit 32GB DDR5' },
       { name: 'RTX 4060' },
     ])
     const articleRecommendations = getArticleProductRecommendations('ssd-vs-hd')
@@ -83,6 +95,34 @@ describe('getUpgradeRecommendations', () => {
       isAffiliatePending: false,
     })
     expect(genericItems[2]).toMatchObject({
+      link: 'https://amzn.to/3ONO7Ql',
+      isAffiliatePending: false,
+    })
+    expect(genericItems[3]).toMatchObject({
+      link: 'https://amzn.to/49vrneN',
+      isAffiliatePending: false,
+    })
+    expect(genericItems[4]).toMatchObject({
+      link: 'https://amzn.to/49vrneN',
+      isAffiliatePending: false,
+    })
+    expect(genericItems[5]).toMatchObject({
+      link: 'https://amzn.to/48KkTZk',
+      isAffiliatePending: false,
+    })
+    expect(genericItems[6]).toMatchObject({
+      link: 'https://amzn.to/48KkTZk',
+      isAffiliatePending: false,
+    })
+    expect(genericItems[7]).toMatchObject({
+      link: 'https://amzn.to/4dpxDXP',
+      isAffiliatePending: false,
+    })
+    expect(genericItems[8]).toMatchObject({
+      link: 'https://amzn.to/4dpxDXP',
+      isAffiliatePending: false,
+    })
+    expect(genericItems[9]).toMatchObject({
       link: '#',
       isAffiliatePending: true,
     })
