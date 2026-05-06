@@ -941,6 +941,7 @@
   display: grid;
   grid-template-rows: auto auto 1fr auto auto;
   gap: 12px;
+  min-width: 0;
   min-height: 266px;
   padding: 18px;
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -966,40 +967,51 @@
 
 .resultado-upgrade-card div {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
+  min-width: 0;
   padding-bottom: 12px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .resultado-upgrade-card div span {
+  min-width: 0;
   color: var(--resultado-muted);
   font-size: 11px;
   font-weight: 900;
+  overflow-wrap: anywhere;
   text-transform: uppercase;
 }
 
 .resultado-upgrade-card div strong {
+  min-width: 0;
   color: #22c55e;
-  font-size: 24px;
+  font-size: clamp(17px, 1.4vw, 21px);
   font-weight: 950;
-  line-height: 1;
+  line-height: 1.08;
+  overflow-wrap: anywhere;
+  text-align: right;
 }
 
 .resultado-upgrade-card h3 {
+  min-width: 0;
   margin: 0;
   color: #f9fafb;
   font-size: 18px;
   font-weight: 950;
   line-height: 1.15;
+  overflow-wrap: anywhere;
 }
 
 .resultado-upgrade-card p {
+  min-width: 0;
   margin: 0;
   color: #9ca3af;
   font-size: 13px;
   line-height: 1.48;
+  overflow-wrap: anywhere;
 }
 
 .resultado-upgrade-button,
@@ -1023,9 +1035,13 @@
 
 .resultado-upgrade-button {
   width: 100%;
+  min-width: 0;
+  padding: 0 12px;
   border: 0;
   background: linear-gradient(135deg, #22c55e, #15803d);
   font-size: 13px;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
   text-decoration: none;
   text-transform: uppercase;
   box-shadow: 0 12px 28px rgba(34, 197, 94, 0.2);
