@@ -135,7 +135,7 @@ function Home() {
     <div className="home-page">
       <SEOHead
         title="Teste de PC Gamer Online | Descubra FPS, Desempenho e Configuração"
-        description="Teste seu PC gamer, veja FPS estimado, gargalos, recomendações de upgrade e descubra se seu setup roda os principais jogos."
+        description="Teste seu PC gamer online, descubra o desempenho em jogos, veja estimativa de FPS e compare sua configuração para melhorar sua experiência gamer."
         canonicalPath="/"
       />
       <Header />
