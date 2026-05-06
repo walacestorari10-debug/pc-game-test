@@ -82,23 +82,50 @@ function upsertJsonLd(structuredData) {
   }
 }
 
-function SEOHead({ title, description, canonicalPath, structuredData }) {
+function SEOHead({
+  title,
+  description,
+  canonicalPath,
+  structuredData,
+  openGraphTitle = title,
+  openGraphDescription = description,
+  openGraphImage,
+}) {
   useEffect(() => {
     const canonicalUrl = getCanonicalUrl(canonicalPath)
 
     document.title = title
     upsertMeta('meta[name="description"]', { name: 'description' }, description)
-    upsertMeta('meta[property="og:title"]', { property: 'og:title' }, title)
+    upsertMeta(
+      'meta[property="og:title"]',
+      { property: 'og:title' },
+      openGraphTitle,
+    )
     upsertMeta(
       'meta[property="og:description"]',
       { property: 'og:description' },
-      description,
+      openGraphDescription,
     )
     upsertMeta('meta[property="og:url"]', { property: 'og:url' }, canonicalUrl)
     upsertMeta('meta[property="og:type"]', { property: 'og:type' }, 'website')
+    if (openGraphImage) {
+      upsertMeta(
+        'meta[property="og:image"]',
+        { property: 'og:image' },
+        openGraphImage,
+      )
+    }
     upsertCanonical(canonicalUrl)
     upsertJsonLd(structuredData)
-  }, [canonicalPath, description, structuredData, title])
+  }, [
+    canonicalPath,
+    description,
+    openGraphDescription,
+    openGraphImage,
+    openGraphTitle,
+    structuredData,
+    title,
+  ])
 
   return null
 }
