@@ -279,6 +279,8 @@ function UpgradeCard({ upgrade }) {
         className="game-upgrade-price-button"
         isAffiliatePending={upgrade.isAffiliatePending ?? true}
         link={upgrade.link ?? '#'}
+        productName={upgrade.name}
+        provider="amazon"
       />
     </article>
   )

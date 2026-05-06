@@ -84,6 +84,8 @@ function ArticleProductRecommendations({ recommendations }) {
                 className="article-product-button"
                 isAffiliatePending={item.isAffiliatePending}
                 link={item.link}
+                productName={item.name}
+                provider="amazon"
               />
             </div>
           )

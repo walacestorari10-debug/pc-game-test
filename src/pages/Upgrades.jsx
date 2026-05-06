@@ -50,6 +50,8 @@ function Upgrades() {
                     className="static-action-button"
                     isAffiliatePending={upgrade.isAffiliatePending}
                     link={upgrade.link}
+                    productName={upgrade.name}
+                    provider="amazon"
                   />
                 </article>
               ))}

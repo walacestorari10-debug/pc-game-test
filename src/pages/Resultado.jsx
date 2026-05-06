@@ -310,6 +310,8 @@ function UpgradeCard({ upgrade }) {
         className="resultado-upgrade-button"
         isAffiliatePending={upgrade.isAffiliatePending}
         link={upgrade.link}
+        productName={upgrade.name}
+        provider="amazon"
       />
     </article>
   )
