@@ -134,7 +134,7 @@ function Home() {
   return (
     <div className="home-page">
       <SEOHead
-        title="PC Game Test | Veja se seu PC roda jogos"
+        title="Teste de PC Gamer Online | Descubra FPS, Desempenho e Configuração"
         description="Teste seu PC gamer, veja FPS estimado, gargalos, recomendações de upgrade e descubra se seu setup roda os principais jogos."
         canonicalPath="/"
       />
