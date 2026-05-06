@@ -70,14 +70,18 @@ describe('getUpgradeRecommendations', () => {
 
   it('reuses the same affiliate link outside the main upgrade list', () => {
     const linkedProducts = [
+      ['CPU moderno de 6 núcleos', 'https://amzn.to/3QIpvZV'],
       ['AMD Ryzen 7 5800X', 'https://amzn.to/3OWQAYJ'],
       ['AMD Ryzen 5 5600', 'https://amzn.to/42hFuk0'],
       ['Intel Core i5-12400F', 'https://amzn.to/4wbrHsP'],
       ['RTX 4060', 'https://amzn.to/42d1som'],
+      ['RTX 4070 ou superior', 'https://amzn.to/4tYtvUI'],
       ['RTX 3060 12GB', 'https://amzn.to/4wcuz90'],
       ['SSD NVMe 1TB', 'https://amzn.to/4d5DHDv'],
       ['SSD SATA 1TB', 'https://amzn.to/49wIywy'],
       ['SSD 1TB', 'https://amzn.to/4wbsn1l'],
+      ['SSD NVMe', 'https://amzn.to/49bntHW'],
+      ['16GB de RAM', 'https://amzn.to/4n8j8Lm'],
       ['SSD NVMe 2TB', 'https://amzn.to/3ONO7Ql'],
       ['16GB DDR4 3200MHz', 'https://amzn.to/49vrneN'],
       ['Kit 16GB DDR4', 'https://amzn.to/49vrneN'],

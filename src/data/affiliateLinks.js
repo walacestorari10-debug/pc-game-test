@@ -2,6 +2,9 @@ export const amazonAssociateId = 'pcgametest-20'
 export const affiliateLinkFallback = '#'
 
 export const affiliateLinks = {
+  'CPU moderno de 6 núcleos': {
+    amazon: 'https://amzn.to/3QIpvZV',
+  },
   'AMD Ryzen 7 5800X': {
     amazon: 'https://amzn.to/3OWQAYJ',
   },
@@ -13,6 +16,9 @@ export const affiliateLinks = {
   },
   'RTX 4060': {
     amazon: 'https://amzn.to/42d1som',
+  },
+  'RTX 4070 ou superior': {
+    amazon: 'https://amzn.to/4tYtvUI',
   },
   'RTX 3060 12GB': {
     amazon: 'https://amzn.to/4wcuz90',
@@ -28,6 +34,12 @@ export const affiliateLinks = {
   },
   'SSD 1TB': {
     amazon: 'https://amzn.to/4wbsn1l',
+  },
+  'SSD NVMe': {
+    amazon: 'https://amzn.to/49bntHW',
+  },
+  '16GB de RAM': {
+    amazon: 'https://amzn.to/4n8j8Lm',
   },
   '16GB DDR4': {
     amazon: 'https://amzn.to/49vrneN',
