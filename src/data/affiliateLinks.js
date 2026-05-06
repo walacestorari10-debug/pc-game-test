@@ -50,6 +50,15 @@ export const affiliateLinks = {
   'Kit 16GB DDR4': {
     amazon: 'https://amzn.to/49vrneN',
   },
+  '32GB RAM': {
+    amazon: 'https://amzn.to/3QIahEe',
+  },
+  '32GB de RAM': {
+    amazon: 'https://amzn.to/3QIahEe',
+  },
+  '32GB de RAM + SSD NVMe': {
+    amazon: 'https://amzn.to/3QIahEe',
+  },
   '32GB DDR4': {
     amazon: 'https://amzn.to/48KkTZk',
   },
