@@ -11,7 +11,7 @@ function ArticlesSection() {
       aria-labelledby="articles-title"
     >
       <div className="section-heading">
-        <h2 id="articles-title">Artigos e Guias</h2>
+        <h2 id="articles-title">Melhore o desempenho do seu PC com dicas práticas</h2>
         <Link to="/artigos">Ver todos</Link>
       </div>
 

@@ -13,11 +13,11 @@ function HeroSection() {
       <div className="hero-content">
         <p className="eyebrow">Dashboard gamer</p>
         <h1>
-          DESCUBRA O VERDADEIRO <span>PODER</span> DO SEU PC
+          Descubra o verdadeiro <span>poder</span> do seu PC gamer
         </h1>
-        <p className="hero-copy">
-          Teste, compare e melhore seu desempenho em centenas de jogos.
-        </p>
+        <h2 className="hero-copy">
+          Teste o desempenho do seu PC gamer
+        </h2>
         <Link className="primary-button hero-button" to="/teste">
           TESTAR MEU PC AGORA
           <span aria-hidden="true">&rsaquo;</span>

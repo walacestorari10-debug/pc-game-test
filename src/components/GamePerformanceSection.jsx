@@ -133,7 +133,7 @@ function GamePerformanceSection({ setupResult }) {
     <section className="dashboard-card game-performance-section" id="games">
       <div className="section-heading">
         <div>
-          <h2>Desempenho em Jogos</h2>
+          <h2>Compare sua configuração com jogos populares</h2>
           {setupResult && (
             <p className="game-performance-context">
               FPS recalculado com seu último setup salvo

@@ -58,7 +58,7 @@ function EmptyPerformanceSummary() {
       id="performance"
       aria-labelledby="performance-title"
     >
-      <h2 id="performance-title">Resultado do seu PC</h2>
+      <h2 id="performance-title">Descubra quantos FPS seu computador roda</h2>
       <div className="performance-body">
         <div className="score-ring score-ring-empty" aria-label="Nenhum teste feito">
           <ScoreRingFx />
@@ -108,7 +108,7 @@ function PerformanceSummary({ setupResult }) {
       id="performance"
       aria-labelledby="performance-title"
     >
-      <h2 id="performance-title">Resultado do seu PC</h2>
+      <h2 id="performance-title">Descubra quantos FPS seu computador roda</h2>
       <div className="performance-body">
         <div
           className="score-ring"
