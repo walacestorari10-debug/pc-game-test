@@ -22,12 +22,25 @@ const requestedRoutes = [
 const nonIndexableRoutes = new Set([
   '/analise',
   '/gamezone',
+  '/historico',
   '/pc-roda-apex',
   '/pc-roda-forza',
   '/pc-roda-cyberpunk',
   '/pc-roda-elden',
   '/pc-roda-rdr2',
+  '/resultado',
 ])
+
+const articleRoutes = [
+  '/artigos/como-aumentar-fps-em-jogos',
+  '/artigos/atualizar-drivers-nvidia',
+  '/artigos/ssd-vs-hd',
+  '/artigos/melhor-placa-de-video-custo-beneficio',
+  '/artigos/quanto-de-ram-precisa',
+  '/artigos/otimizacao-windows-para-jogos',
+]
+
+const articleRouteSet = new Set(articleRoutes)
 
 function readSource(relativePath) {
   return readFileSync(path.join(projectRoot, relativePath), 'utf8')
@@ -106,6 +119,10 @@ function getPriority(route) {
     return '1.0'
   }
 
+  if (articleRouteSet.has(route)) {
+    return '0.7'
+  }
+
   return '0.8'
 }
 
@@ -133,16 +150,39 @@ function createSitemap(routes) {
         return 1
       }
 
+      const firstArticleIndex = articleRoutes.indexOf(first)
+      const secondArticleIndex = articleRoutes.indexOf(second)
+
+      if (firstArticleIndex !== -1 || secondArticleIndex !== -1) {
+        if (firstArticleIndex === -1) {
+          return 1
+        }
+
+        if (secondArticleIndex === -1) {
+          return -1
+        }
+
+        return firstArticleIndex - secondArticleIndex
+      }
+
       return first.localeCompare(second)
     })
-    .map(
-      (route) => `  <url>
+    .map((route) => {
+      if (articleRouteSet.has(route)) {
+        return `<url>
+  <loc>${escapeXml(toAbsoluteUrl(route))}</loc>
+  <changefreq>weekly</changefreq>
+  <priority>${getPriority(route)}</priority>
+</url>`
+      }
+
+      return `  <url>
     <loc>${escapeXml(toAbsoluteUrl(route))}</loc>
     <lastmod>${currentDate}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>${getPriority(route)}</priority>
-  </url>`,
-    )
+  </url>`
+    })
     .join('\n\n')
 
   return `<?xml version="1.0" encoding="UTF-8"?>

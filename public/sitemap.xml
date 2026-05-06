@@ -8,50 +8,44 @@
     <priority>1.0</priority>
   </url>
 
+<url>
+  <loc>https://pc-game-test.vercel.app/artigos/como-aumentar-fps-em-jogos</loc>
+  <changefreq>weekly</changefreq>
+  <priority>0.7</priority>
+</url>
+
+<url>
+  <loc>https://pc-game-test.vercel.app/artigos/atualizar-drivers-nvidia</loc>
+  <changefreq>weekly</changefreq>
+  <priority>0.7</priority>
+</url>
+
+<url>
+  <loc>https://pc-game-test.vercel.app/artigos/ssd-vs-hd</loc>
+  <changefreq>weekly</changefreq>
+  <priority>0.7</priority>
+</url>
+
+<url>
+  <loc>https://pc-game-test.vercel.app/artigos/melhor-placa-de-video-custo-beneficio</loc>
+  <changefreq>weekly</changefreq>
+  <priority>0.7</priority>
+</url>
+
+<url>
+  <loc>https://pc-game-test.vercel.app/artigos/quanto-de-ram-precisa</loc>
+  <changefreq>weekly</changefreq>
+  <priority>0.7</priority>
+</url>
+
+<url>
+  <loc>https://pc-game-test.vercel.app/artigos/otimizacao-windows-para-jogos</loc>
+  <changefreq>weekly</changefreq>
+  <priority>0.7</priority>
+</url>
+
   <url>
     <loc>https://pc-game-test.vercel.app/artigos</loc>
-    <lastmod>2026-05-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://pc-game-test.vercel.app/artigos/atualizar-drivers-nvidia</loc>
-    <lastmod>2026-05-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://pc-game-test.vercel.app/artigos/como-aumentar-fps-em-jogos</loc>
-    <lastmod>2026-05-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://pc-game-test.vercel.app/artigos/melhor-placa-de-video-custo-beneficio</loc>
-    <lastmod>2026-05-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://pc-game-test.vercel.app/artigos/otimizacao-windows-para-jogos</loc>
-    <lastmod>2026-05-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://pc-game-test.vercel.app/artigos/quanto-de-ram-precisa</loc>
-    <lastmod>2026-05-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://pc-game-test.vercel.app/artigos/ssd-vs-hd</loc>
     <lastmod>2026-05-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -73,13 +67,6 @@
 
   <url>
     <loc>https://pc-game-test.vercel.app/contato</loc>
-    <lastmod>2026-05-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://pc-game-test.vercel.app/historico</loc>
     <lastmod>2026-05-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -171,13 +158,6 @@
 
   <url>
     <loc>https://pc-game-test.vercel.app/ranking</loc>
-    <lastmod>2026-05-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://pc-game-test.vercel.app/resultado</loc>
     <lastmod>2026-05-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
