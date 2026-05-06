@@ -69,60 +69,40 @@ describe('getUpgradeRecommendations', () => {
   })
 
   it('reuses the same affiliate link outside the main upgrade list', () => {
+    const linkedProducts = [
+      ['AMD Ryzen 7 5800X', 'https://amzn.to/3OWQAYJ'],
+      ['AMD Ryzen 5 5600', 'https://amzn.to/42hFuk0'],
+      ['Intel Core i5-12400F', 'https://amzn.to/4wbrHsP'],
+      ['RTX 4060', 'https://amzn.to/42d1som'],
+      ['RTX 3060 12GB', 'https://amzn.to/4wcuz90'],
+      ['SSD NVMe 1TB', 'https://amzn.to/4d5DHDv'],
+      ['SSD SATA 1TB', 'https://amzn.to/49wIywy'],
+      ['SSD 1TB', 'https://amzn.to/4wbsn1l'],
+      ['SSD NVMe 2TB', 'https://amzn.to/3ONO7Ql'],
+      ['16GB DDR4 3200MHz', 'https://amzn.to/49vrneN'],
+      ['Kit 16GB DDR4', 'https://amzn.to/49vrneN'],
+      ['32GB DDR4 3200MHz', 'https://amzn.to/48KkTZk'],
+      ['Kit 32GB DDR4', 'https://amzn.to/48KkTZk'],
+      ['32GB DDR5', 'https://amzn.to/4dpxDXP'],
+      ['Kit 32GB DDR5', 'https://amzn.to/4dpxDXP'],
+    ]
     const genericItems = withAmazonAffiliateLinks([
-      { name: 'SSD NVMe 1TB' },
-      { name: 'SSD SATA 1TB' },
-      { name: 'SSD NVMe 2TB' },
-      { name: '16GB DDR4 3200MHz' },
-      { name: 'Kit 16GB DDR4' },
-      { name: '32GB DDR4 3200MHz' },
-      { name: 'Kit 32GB DDR4' },
-      { name: '32GB DDR5' },
-      { name: 'Kit 32GB DDR5' },
-      { name: 'RTX 4060' },
+      ...linkedProducts.map(([name]) => ({ name })),
+      { name: 'RX 6600' },
     ])
     const articleRecommendations = getArticleProductRecommendations('ssd-vs-hd')
     const articleSsd = articleRecommendations.items.find(
       (item) => item.name === 'SSD NVMe 1TB',
     )
 
-    expect(genericItems[0]).toMatchObject({
-      link: 'https://amzn.to/4d5DHDv',
-      isAffiliatePending: false,
+    linkedProducts.forEach(([name, link], index) => {
+      expect(genericItems[index]).toMatchObject({
+        name,
+        link,
+        isAffiliatePending: false,
+      })
     })
-    expect(genericItems[1]).toMatchObject({
-      link: 'https://amzn.to/49wIywy',
-      isAffiliatePending: false,
-    })
-    expect(genericItems[2]).toMatchObject({
-      link: 'https://amzn.to/3ONO7Ql',
-      isAffiliatePending: false,
-    })
-    expect(genericItems[3]).toMatchObject({
-      link: 'https://amzn.to/49vrneN',
-      isAffiliatePending: false,
-    })
-    expect(genericItems[4]).toMatchObject({
-      link: 'https://amzn.to/49vrneN',
-      isAffiliatePending: false,
-    })
-    expect(genericItems[5]).toMatchObject({
-      link: 'https://amzn.to/48KkTZk',
-      isAffiliatePending: false,
-    })
-    expect(genericItems[6]).toMatchObject({
-      link: 'https://amzn.to/48KkTZk',
-      isAffiliatePending: false,
-    })
-    expect(genericItems[7]).toMatchObject({
-      link: 'https://amzn.to/4dpxDXP',
-      isAffiliatePending: false,
-    })
-    expect(genericItems[8]).toMatchObject({
-      link: 'https://amzn.to/4dpxDXP',
-      isAffiliatePending: false,
-    })
-    expect(genericItems[9]).toMatchObject({
+    expect(genericItems.at(-1)).toMatchObject({
       link: '#',
       isAffiliatePending: true,
     })
