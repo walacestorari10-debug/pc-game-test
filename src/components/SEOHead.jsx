@@ -1,6 +1,8 @@
 import { useEffect } from 'react'
 
 const jsonLdScriptId = 'pc-game-test-json-ld'
+const defaultOpenGraphImage = '/og-image.png'
+const defaultOpenGraphImageAlt = 'PC Game Test'
 
 function getSiteUrl() {
   const envSiteUrl = import.meta.env.VITE_SITE_URL
@@ -31,6 +33,29 @@ function getCanonicalUrl(canonicalPath) {
   const normalizedPath = canonicalPath.startsWith('/')
     ? canonicalPath
     : `/${canonicalPath}`
+
+  return `${normalizedBaseUrl}${normalizedPath}`
+}
+
+function getAbsoluteUrl(pathOrUrl) {
+  if (!pathOrUrl) {
+    return ''
+  }
+
+  if (/^(https?:)?\/\//i.test(pathOrUrl) || /^data:/i.test(pathOrUrl)) {
+    return pathOrUrl
+  }
+
+  const siteUrl = getSiteUrl()
+
+  if (!siteUrl) {
+    return pathOrUrl
+  }
+
+  const normalizedBaseUrl = siteUrl.replace(/\/$/, '')
+  const normalizedPath = pathOrUrl.startsWith('/')
+    ? pathOrUrl
+    : `/${pathOrUrl}`
 
   return `${normalizedBaseUrl}${normalizedPath}`
 }
@@ -89,13 +114,26 @@ function SEOHead({
   structuredData,
   openGraphTitle = title,
   openGraphDescription = description,
-  openGraphImage,
+  openGraphImage = defaultOpenGraphImage,
+  openGraphImageAlt = defaultOpenGraphImageAlt,
+  openGraphType = 'website',
 }) {
   useEffect(() => {
     const canonicalUrl = getCanonicalUrl(canonicalPath)
+    const absoluteOpenGraphImage = getAbsoluteUrl(openGraphImage)
 
     document.title = title
     upsertMeta('meta[name="description"]', { name: 'description' }, description)
+    upsertMeta(
+      'meta[property="og:site_name"]',
+      { property: 'og:site_name' },
+      'PC Game Test',
+    )
+    upsertMeta(
+      'meta[property="og:locale"]',
+      { property: 'og:locale' },
+      'pt_BR',
+    )
     upsertMeta(
       'meta[property="og:title"]',
       { property: 'og:title' },
@@ -107,12 +145,49 @@ function SEOHead({
       openGraphDescription,
     )
     upsertMeta('meta[property="og:url"]', { property: 'og:url' }, canonicalUrl)
-    upsertMeta('meta[property="og:type"]', { property: 'og:type' }, 'website')
-    if (openGraphImage) {
+    upsertMeta('meta[property="og:type"]', { property: 'og:type' }, openGraphType)
+    if (absoluteOpenGraphImage) {
       upsertMeta(
         'meta[property="og:image"]',
         { property: 'og:image' },
-        openGraphImage,
+        absoluteOpenGraphImage,
+      )
+      upsertMeta(
+        'meta[property="og:image:secure_url"]',
+        { property: 'og:image:secure_url' },
+        absoluteOpenGraphImage,
+      )
+      upsertMeta(
+        'meta[property="og:image:alt"]',
+        { property: 'og:image:alt' },
+        openGraphImageAlt,
+      )
+    }
+    upsertMeta(
+      'meta[name="twitter:card"]',
+      { name: 'twitter:card' },
+      'summary_large_image',
+    )
+    upsertMeta(
+      'meta[name="twitter:title"]',
+      { name: 'twitter:title' },
+      openGraphTitle,
+    )
+    upsertMeta(
+      'meta[name="twitter:description"]',
+      { name: 'twitter:description' },
+      openGraphDescription,
+    )
+    if (absoluteOpenGraphImage) {
+      upsertMeta(
+        'meta[name="twitter:image"]',
+        { name: 'twitter:image' },
+        absoluteOpenGraphImage,
+      )
+      upsertMeta(
+        'meta[name="twitter:image:alt"]',
+        { name: 'twitter:image:alt' },
+        openGraphImageAlt,
       )
     }
     upsertCanonical(canonicalUrl)
@@ -122,7 +197,9 @@ function SEOHead({
     description,
     openGraphDescription,
     openGraphImage,
+    openGraphImageAlt,
     openGraphTitle,
+    openGraphType,
     structuredData,
     title,
   ])

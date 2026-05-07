@@ -189,6 +189,9 @@ function ArticlePage() {
         description={article.description}
         canonicalPath={canonicalPath}
         structuredData={structuredData}
+        openGraphImage={article.image}
+        openGraphImageAlt={article.title}
+        openGraphType="article"
       />
       <Header />
 

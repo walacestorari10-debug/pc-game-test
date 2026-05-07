@@ -5,6 +5,7 @@ import Header from '../components/Header'
 import SEOHead from '../components/SEOHead'
 import { supabase } from '../lib/supabaseClient'
 import { hasFeedbackSent, saveFeedbackSent } from '../utils/feedbackStorage'
+import otimizacaoImage from '../assets/images/optimized/otmizacao.webp'
 import '../styles/staticPages.css'
 import '../styles/otimizacaoOnline.css'
 
@@ -209,6 +210,8 @@ function OtimizacaoOnline() {
         description="Entenda como melhorar estabilidade, reduzir ping, evitar lag e otimizar sua conexão para jogos online competitivos."
         canonicalPath="/otimizacao-online"
         structuredData={seoStructuredData}
+        openGraphImage={otimizacaoImage}
+        openGraphImageAlt="Otimização online para jogos no PC Game Test"
       />
       <Header />
 

@@ -7,6 +7,7 @@ import SEOHead from '../components/SEOHead'
 import { cpus, gpus, ram, storage } from '../data/hardware'
 import { games } from '../data/games'
 import { notifyPcGameTestUpdated } from '../utils/storageEvents'
+import inputImage from '../assets/images/optimized/input.webp'
 import '../styles/testePc.css'
 
 const setupStorageKey = 'pcGameTestSetup'
@@ -306,6 +307,8 @@ function TestePc() {
         title="Teste seu PC Gamer | PC Game Test"
         description="Informe seu processador, placa de vídeo, memória RAM e descubra o desempenho estimado do seu PC em jogos."
         canonicalPath="/teste"
+        openGraphImage={inputImage}
+        openGraphImageAlt="Configurador de setup gamer no PC Game Test"
       />
       <Header />
 

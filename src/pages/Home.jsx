@@ -139,7 +139,8 @@ function Home() {
         canonicalPath="/"
         openGraphTitle="Teste de PC Gamer Online | Veja FPS e Desempenho"
         openGraphDescription="Descubra o desempenho do seu PC gamer, veja estimativa de FPS e compare sua configuração com jogos populares."
-        openGraphImage="https://pc-game-test.vercel.app/og-image.png"
+        openGraphImage="/og-image.png"
+        openGraphImageAlt="PC Game Test - teste de PC gamer online"
       />
       <Header />
 

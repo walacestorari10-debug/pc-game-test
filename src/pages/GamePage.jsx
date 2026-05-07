@@ -478,6 +478,9 @@ function GamePage() {
         description={seoDescription}
         canonicalPath={canonicalPath}
         structuredData={structuredData}
+        openGraphImage={imageBySlug[game.slug]}
+        openGraphImageAlt={`Análise de desempenho para ${game.name} no PC Game Test`}
+        openGraphType="article"
       />
       <Header />
 

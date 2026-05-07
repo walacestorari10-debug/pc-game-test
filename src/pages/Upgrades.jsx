@@ -3,6 +3,7 @@ import Footer from '../components/Footer'
 import Header from '../components/Header'
 import SEOHead from '../components/SEOHead'
 import { upgradeRecommendations } from '../data/upgradeRecommendations'
+import gpuImage from '../assets/images/optimized/gpu.webp'
 import '../styles/staticPages.css'
 
 const upgradeGroups = [
@@ -19,6 +20,8 @@ function Upgrades() {
         title="Upgrades Recomendados | PC Game Test"
         description="Veja sugestões de GPU, CPU, RAM e SSD para melhorar o desempenho do seu PC gamer."
         canonicalPath="/upgrades"
+        openGraphImage={gpuImage}
+        openGraphImageAlt="Upgrades recomendados para PC gamer"
       />
       <Header />
 

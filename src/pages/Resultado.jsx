@@ -534,6 +534,8 @@ function EmptyResult() {
         title="Resultado do seu PC | PC Game Test"
         description="Veja a análise do seu setup, FPS estimado, gargalos, status de desempenho e recomendações de upgrade."
         canonicalPath="/resultado"
+        openGraphImage={warzoneImage}
+        openGraphImageAlt="Resultado de desempenho no PC Game Test"
       />
       <Header />
 
@@ -608,6 +610,8 @@ function ResultContent({ setup, selectedResult }) {
         title="Resultado do seu PC | PC Game Test"
         description="Veja a análise do seu setup, FPS estimado, gargalos, status de desempenho e recomendações de upgrade."
         canonicalPath="/resultado"
+        openGraphImage={imageBySlug[selectedResult.game.slug]}
+        openGraphImageAlt={`Resultado de desempenho para ${selectedResult.game.name}`}
       />
       <Header />
 

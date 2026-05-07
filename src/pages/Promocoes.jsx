@@ -2,6 +2,7 @@ import AffiliateButton from '../components/AffiliateButton'
 import Footer from '../components/Footer'
 import Header from '../components/Header'
 import SEOHead from '../components/SEOHead'
+import hero2Image from '../assets/images/optimized/hero2.webp'
 import '../styles/staticPages.css'
 
 const promotions = [
@@ -32,6 +33,8 @@ function Promocoes() {
         title="Promoções de Jogos | PC Game Test"
         description="Veja promoções de jogos selecionadas pelo PC Game Test. Links reais serão adicionados em breve."
         canonicalPath="/promocoes"
+        openGraphImage={hero2Image}
+        openGraphImageAlt="Promoções de jogos no PC Game Test"
       />
       <Header />
 

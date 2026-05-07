@@ -201,6 +201,8 @@ function JogosContent({ initialSearchTerm }) {
         title="Jogos analisados | PC Game Test"
         description="Veja análises de desempenho, requisitos e FPS estimado para os principais jogos de PC."
         canonicalPath="/jogos"
+        openGraphImage={warzoneImage}
+        openGraphImageAlt="Biblioteca de jogos analisados no PC Game Test"
       />
       <Header />
 

@@ -194,6 +194,8 @@ function Artigos() {
         title="Artigos e Guias | PC Game Test"
         description="Dicas, tutoriais e conteúdos para melhorar o desempenho do seu PC gamer, otimizar jogos e escolher upgrades com mais confiança."
         canonicalPath="/artigos"
+        openGraphImage={hero2Image}
+        openGraphImageAlt="Artigos e guias do PC Game Test"
       />
       <Header />
 
