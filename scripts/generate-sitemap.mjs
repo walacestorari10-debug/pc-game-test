@@ -38,6 +38,9 @@ const excludedRoutes = new Set([
 ])
 
 const articleRoutes = [
+  '/artigos/como-reduzir-ping-em-jogos',
+  '/artigos/vpn-gamer-reduz-lag',
+  '/artigos/melhorar-estabilidade-internet-jogos',
   '/artigos/como-aumentar-fps-em-jogos',
   '/artigos/atualizar-drivers-nvidia',
   '/artigos/ssd-vs-hd',

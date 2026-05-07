@@ -28,6 +28,30 @@ const defaultImageAlt = 'PC Game Test - teste de PC gamer online'
 
 const articleRoutes = [
   {
+    path: '/artigos/como-reduzir-ping-em-jogos',
+    title: 'Como reduzir ping em jogos online | PC Game Test',
+    description:
+      'Veja dicas reais para reduzir ping, melhorar estabilidade e diminuir lag em jogos online competitivos.',
+    image: 'reduzir.webp',
+    imageAlt: 'Como reduzir ping em jogos online',
+  },
+  {
+    path: '/artigos/vpn-gamer-reduz-lag',
+    title: 'VPN gamer reduz lag? Entenda quando ajuda | PC Game Test',
+    description:
+      'Entenda quando VPN gamer pode melhorar estabilidade, rota e conexão em jogos online.',
+    image: 'vpn.webp',
+    imageAlt: 'VPN gamer reduz lag?',
+  },
+  {
+    path: '/artigos/melhorar-estabilidade-internet-jogos',
+    title: 'Como melhorar estabilidade da internet para jogar | PC Game Test',
+    description:
+      'Veja como melhorar estabilidade, reduzir perdas de conexão e evitar travamentos em jogos online.',
+    image: 'estabilidade.webp',
+    imageAlt: 'Como melhorar estabilidade da internet para jogos',
+  },
+  {
     path: '/artigos/como-aumentar-fps-em-jogos',
     title: 'Como aumentar FPS em jogos | PC Game Test',
     description:

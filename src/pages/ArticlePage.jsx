@@ -97,6 +97,58 @@ function ArticleProductRecommendations({ recommendations }) {
   )
 }
 
+const articleInternalLinks = [
+  {
+    to: '/otimizacao-online',
+    label: 'Otimização online',
+    description: 'Entenda ping, rotas, perda de pacote e estabilidade para jogos.',
+  },
+  {
+    to: '/teste',
+    label: 'Teste seu PC',
+    description: 'Veja desempenho estimado, gargalos e pontos de melhoria do setup.',
+  },
+  {
+    to: '/jogos',
+    label: 'Jogos analisados',
+    description: 'Compare requisitos e estimativas para títulos populares no PC.',
+  },
+  {
+    to: '/upgrades',
+    label: 'Upgrades recomendados',
+    description: 'Avalie peças que podem melhorar FPS, carregamento e estabilidade.',
+  },
+]
+
+function ArticleInternalLinks() {
+  return (
+    <nav className="article-internal-links" aria-label="Links internos relacionados">
+      {articleInternalLinks.map((link) => (
+        <Link to={link.to} key={link.to}>
+          <span>{link.label}</span>
+          <strong>{link.description}</strong>
+        </Link>
+      ))}
+    </nav>
+  )
+}
+
+function ArticleFinalCta() {
+  return (
+    <section className="article-final-cta" aria-labelledby="article-final-cta-title">
+      <div>
+        <p className="article-detail-kicker">Análise rápida</p>
+        <h2 id="article-final-cta-title">Teste o desempenho do seu PC</h2>
+        <p>
+          Descubra como seu setup se comporta nos jogos e veja onde vale ajustar
+          antes de pensar em upgrade.
+        </p>
+      </div>
+      <Link to="/teste">Testar agora</Link>
+    </section>
+  )
+}
+
 function toSectionId(heading) {
   return heading
     .normalize('NFD')
@@ -164,6 +216,7 @@ function ArticlePage() {
   const relatedArticles = getRelatedArticles(article.slug, 3)
   const productRecommendations = getArticleProductRecommendations(article.slug)
   const canonicalPath = `/artigos/${article.slug}`
+  const seoTitle = article.seoTitle ?? `${article.title} | PC Game Test`
   const structuredData = {
     '@context': 'https://schema.org',
     '@type': 'Article',
@@ -185,7 +238,7 @@ function ArticlePage() {
   return (
     <div className="artigos-page">
       <SEOHead
-        title={`${article.title} | PC Game Test`}
+        title={seoTitle}
         description={article.description}
         canonicalPath={canonicalPath}
         structuredData={structuredData}
@@ -241,9 +294,13 @@ function ArticlePage() {
             <ArticleSideRail article={article} relatedArticles={relatedArticles} />
           </div>
 
+          <ArticleInternalLinks />
+
           <ArticleProductRecommendations recommendations={productRecommendations} />
 
           <FeedbackWidget />
+
+          <ArticleFinalCta />
         </article>
 
         <section className="article-related-section" aria-labelledby="related-articles-title">

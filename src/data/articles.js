@@ -4,8 +4,216 @@ import otimizacaoImage from '../assets/images/optimized/otmizacao.webp'
 import ramImage from '../assets/images/optimized/ram.webp'
 import soldadoImage from '../assets/images/optimized/soldado.webp'
 import ssdImage from '../assets/images/optimized/ssd.webp'
+import estabilidadeImage from '../assets/images/optimized/estabilidade.webp'
+import reduzirPingImage from '../assets/images/optimized/reduzir.webp'
+import vpnImage from '../assets/images/optimized/vpn.webp'
 
 export const articles = [
+  {
+    slug: 'como-reduzir-ping-em-jogos',
+    title: 'Como reduzir ping em jogos online',
+    seoTitle: 'Como reduzir ping em jogos online | PC Game Test',
+    description:
+      'Veja dicas reais para reduzir ping, melhorar estabilidade e diminuir lag em jogos online competitivos.',
+    category: 'Conexão',
+    readTime: '7 min de leitura',
+    image: reduzirPingImage,
+    imageAspectRatio: '3 / 2',
+    date: '2026-05-07',
+    author: 'Equipe PC Game Test',
+    visual: 'network',
+    topics: ['optimization', 'network', 'ping', 'lag', 'windows', 'performance'],
+    contentSections: [
+      {
+        heading: 'O que é ping?',
+        paragraphs: [
+          'Ping é a latência entre o seu PC e o servidor do jogo, normalmente medida em milissegundos. Na prática, ele indica quanto tempo uma informação leva para sair do seu computador, chegar ao servidor e voltar com uma resposta. Quanto menor e mais estável esse tempo, mais rápida tende a ser a resposta dos seus comandos dentro da partida.',
+          'Ping não é a mesma coisa que FPS. FPS depende do desempenho do seu hardware e das configurações gráficas; ping depende da conexão, da rota até o servidor e da estabilidade da rede. Um PC pode rodar a 180 FPS e ainda assim parecer atrasado se a conexão tiver ping alto, perda de pacotes ou variação forte de latência.',
+        ],
+      },
+      {
+        heading: 'O que causa ping alto?',
+        paragraphs: [
+          'A causa mais comum é distância: jogar em um servidor longe da sua região aumenta o caminho físico que os dados precisam percorrer. Mas ping alto também pode vir de congestionamento no provedor, rota ruim até o servidor do jogo, roteador sobrecarregado, Wi-Fi instável, downloads ativos e muitos dispositivos usando a rede ao mesmo tempo.',
+          'Velocidade de download alta não garante ping baixo. Um plano de 500 Mbps pode ter partidas ruins se a rota estiver congestionada ou se o upload estiver saturado por backup, stream ou atualização. Para jogos competitivos, estabilidade, latência e perda de pacotes importam mais do que o número grande do plano de internet.',
+        ],
+      },
+      {
+        heading: 'Como reduzir lag e instabilidade',
+        paragraphs: [
+          'Comece pelo básico que costuma resolver mais casos: pause downloads, feche launchers atualizando jogos, desative backups na nuvem durante a partida e evite streams em alta resolução na mesma rede. Se outras pessoas usam a internet ao mesmo tempo, tente jogar em horários diferentes para confirmar se o problema aparece junto com maior uso da casa.',
+          'Também vale testar servidores dentro do próprio jogo, reiniciar modem e roteador quando a conexão degrada, atualizar driver de rede e comparar resultados sempre no mesmo jogo e no mesmo horário. Se o lag vem acompanhado de queda de FPS, travamentos ou uso alto de CPU/GPU, o problema pode ser desempenho local, não apenas internet.',
+        ],
+      },
+      {
+        heading: 'Wi-Fi vs cabo',
+        paragraphs: [
+          'Cabo de rede costuma ser a escolha mais confiável para jogar porque reduz interferência, perda de sinal e variação de latência. Ele não diminui magicamente a distância até o servidor, mas deixa o trecho entre o PC e o roteador muito mais previsível. Para partidas ranqueadas, essa previsibilidade vale bastante.',
+          'Se precisar usar Wi-Fi, prefira 5 GHz ou 6 GHz quando o roteador e o PC suportarem, jogue perto do roteador, evite paredes grossas no caminho e teste canais menos congestionados. Repetidores simples podem aumentar alcance, mas também podem adicionar atraso e instabilidade. Em desktop sem porta próxima, um bom cabo passado de forma discreta costuma ser melhor que tentar compensar Wi-Fi ruim com software.',
+        ],
+      },
+      {
+        heading: 'DNS ajuda?',
+        paragraphs: [
+          'DNS transforma nomes de servidores em endereços IP. Trocar DNS pode melhorar abertura de sites, login em launchers ou resolução inicial de serviços, mas normalmente não muda a latência da partida depois que a conexão com o servidor já foi estabelecida. Por isso, DNS não deve ser tratado como solução garantida para reduzir ping.',
+          'Mesmo assim, usar um DNS confiável pode evitar falhas de resolução e lentidão em serviços online. O ideal é testar com calma, anotar o ping dentro do jogo antes e depois e manter a opção que se mostrar mais estável no seu caso. Se o ping médio não mudar, isso é normal: o gargalo provavelmente está na rota, no Wi-Fi, no provedor ou no servidor escolhido.',
+        ],
+      },
+      {
+        heading: 'VPN gamer ajuda?',
+        paragraphs: [
+          'VPN gamer pode ajudar quando a rota do seu provedor até o servidor do jogo está ruim e o túnel da VPN encontra um caminho mais estável. Esse cenário existe, principalmente em rotas com congestionamento ou perda de pacotes. Ainda assim, o resultado depende de região, provedor, jogo, servidor e horário.',
+          'Ela também pode piorar. Uma VPN adiciona mais uma etapa na conexão; se o servidor da VPN estiver longe ou congestionado, o ping sobe. Teste apenas com métricas claras: ping médio, variação de ping, perda de pacotes e sensação de resposta. Se a melhora não for consistente por alguns dias, provavelmente não vale manter como solução principal.',
+        ],
+      },
+      {
+        heading: 'Melhorando rota de conexão',
+        paragraphs: [
+          'A rota é o caminho que seus pacotes fazem até o servidor. Você pode influenciar parte disso escolhendo servidores próximos, evitando matchmaking em regiões distantes e usando opções de limite de ping quando o jogo oferece esse controle. Em alguns casos, reiniciar o modem pode receber uma rota diferente do provedor, mas isso não é garantido.',
+          'Se o problema é frequente e aparece em vários jogos, registre horários, perda de pacotes e prints das métricas internas do jogo antes de falar com o provedor. Informação concreta ajuda mais do que dizer apenas que a internet está ruim. Para entender os termos e cenários, a página de otimização online do PC Game Test aprofunda ping, rotas e estabilidade sem prometer resultado automático.',
+        ],
+      },
+      {
+        heading: 'Dicas para Warzone, Valorant e CS2',
+        paragraphs: [
+          'Em Warzone, fique atento a indicadores como packet burst, perda de pacote e variação de latência. Como o jogo também pode pesar bastante em CPU, RAM e armazenamento, diferencie lag de rede de stutter local. Fechar downloads, usar cabo e escolher a região mais próxima costuma ser mais efetivo do que trocar várias configurações aleatórias de uma vez.',
+          'Em Valorant e CS2, priorize servidores próximos e acompanhe os gráficos de rede do próprio jogo quando disponíveis. Se o ping médio é aceitável, mas há travadas rápidas, procure por jitter e perda de pacotes. Ajustar limite de ping no matchmaking quando o jogo permite, evitar Wi-Fi congestionado e testar o desempenho do PC ajudam a separar problema de conexão de gargalo de hardware.',
+        ],
+      },
+    ],
+  },
+  {
+    slug: 'vpn-gamer-reduz-lag',
+    title: 'VPN gamer reduz lag?',
+    seoTitle: 'VPN gamer reduz lag? Entenda quando ajuda | PC Game Test',
+    description:
+      'Entenda quando VPN gamer pode melhorar estabilidade, rota e conexão em jogos online.',
+    category: 'Conexão',
+    readTime: '6 min de leitura',
+    image: vpnImage,
+    imageAspectRatio: '3 / 2',
+    date: '2026-05-07',
+    author: 'Equipe PC Game Test',
+    visual: 'network',
+    topics: ['optimization', 'network', 'ping', 'lag', 'windows'],
+    contentSections: [
+      {
+        heading: 'O que uma VPN gamer faz?',
+        paragraphs: [
+          'Uma VPN gamer cria um túnel entre o seu PC e um servidor intermediário antes de seguir para o servidor do jogo. A promessa não é deixar sua internet mais rápida, e sim tentar usar uma rota diferente daquela escolhida automaticamente pelo provedor. Em algumas redes, essa rota alternativa pode ser mais estável.',
+          'A diferença para uma VPN comum costuma estar nos servidores voltados a baixa latência, na escolha de nós por região e em recursos de diagnóstico. Mesmo assim, ela continua dependendo de infraestrutura, distância, capacidade do serviço e qualidade da conexão local. Nenhuma VPN consegue apagar limitações físicas ou consertar Wi-Fi fraco.',
+        ],
+      },
+      {
+        heading: 'Quando pode ajudar',
+        paragraphs: [
+          'Pode ajudar quando seu provedor usa uma rota ruim até determinado jogo, quando há perda de pacotes em trechos específicos ou quando o caminho alternativo da VPN tem melhor peering com o servidor. O caso clássico é o jogador com internet estável em geral, mas ping ou perda ruins em um jogo específico.',
+          'Também pode fazer sentido quando o ping médio não cai muito, mas a variação diminui. Em jogos competitivos, uma conexão estável em 35 ms pode ser melhor do que uma conexão que alterna entre 22 ms e 90 ms durante a partida. O teste precisa considerar ping, jitter, perda e sensação de resposta.',
+        ],
+      },
+      {
+        heading: 'Quando NÃO ajuda',
+        paragraphs: [
+          'VPN gamer não resolve problema dentro da sua casa: sinal Wi-Fi fraco, roteador antigo travando, upload saturado, downloads em segundo plano, cabo ruim ou muitos dispositivos competindo pela rede. Nesses casos, adicionar uma VPN pode só colocar mais uma etapa em cima de uma base instável.',
+          'Ela também não resolve gargalo de hardware. Se o jogo está engasgando por falta de RAM, CPU no limite, SSD lento ou driver de vídeo problemático, a sensação pode parecer lag, mas a causa é local. Antes de pagar por qualquer serviço, confirme se o jogo está com FPS estável e se a perda de pacotes realmente existe.',
+        ],
+      },
+      {
+        heading: 'Rotas de conexão',
+        paragraphs: [
+          'A rota de conexão é formada por vários saltos entre sua casa, seu provedor, redes intermediárias e o servidor do jogo. Às vezes o caminho automático é bom; às vezes passa por trechos congestionados ou longos demais. Uma VPN gamer tenta trocar esse caminho por outro, saindo por um ponto mais favorável.',
+          'O servidor da VPN precisa estar bem posicionado. Se você joga em servidor brasileiro, por exemplo, sair por uma região distante tende a aumentar o ping. O ideal é escolher nós próximos ao servidor do jogo e testar por alguns dias, porque rotas podem mudar conforme horário e congestionamento.',
+        ],
+      },
+      {
+        heading: 'Ping vs estabilidade',
+        paragraphs: [
+          'Ping é importante, mas estabilidade decide muita coisa. Um número baixo na tela não adianta se há picos constantes, perda de pacotes ou variação alta. Esses problemas aparecem como teleporte, comandos atrasados, tiros que parecem não registrar e movimentação irregular de outros jogadores.',
+          'Ao testar VPN gamer, compare partidas parecidas. Observe ping médio, piores picos, perda de pacotes e consistência ao longo de uma sessão inteira. Se a VPN baixa 5 ms mas cria picos ou perda, não é uma melhora real. Se mantém o ping parecido e reduz oscilações, pode ser útil.',
+        ],
+      },
+      {
+        heading: 'Vale a pena para jogos competitivos?',
+        paragraphs: [
+          'Vale considerar apenas quando existe um problema mensurável de rota ou estabilidade e quando o teste mostra melhora repetida. Para quem já tem cabo, bom roteador, servidor próximo e conexão estável, a chance de ganho relevante é menor. Em muitos setups, ajustes gratuitos resolvem mais do que uma assinatura.',
+          'Também é prudente verificar regras e comportamento do jogo. Alguns serviços podem gerar verificação extra de login, mudança de região ou suspeita de acesso incomum. Use provedores confiáveis, evite promessas exageradas e mantenha o foco em estabilidade real, não em números perfeitos de marketing.',
+        ],
+      },
+      {
+        heading: 'Alternativas para melhorar conexão',
+        paragraphs: [
+          'Antes de contratar uma VPN gamer, teste cabo de rede, reduza tráfego em segundo plano, escolha servidores próximos, atualize driver de rede, revise firmware do roteador e limite uploads automáticos. Se o roteador tiver QoS ou SQM bem implementado, ele pode ajudar a evitar que um upload deixe a partida instável.',
+          'Depois disso, use o PC Game Test para separar problemas de desempenho do PC de problemas de conexão. A área de otimização online ajuda a entender rotas e perda de pacotes, enquanto as páginas de jogos e upgrades ajudam a identificar quando o gargalo está no hardware.',
+        ],
+      },
+    ],
+  },
+  {
+    slug: 'melhorar-estabilidade-internet-jogos',
+    title: 'Como melhorar estabilidade da internet para jogos',
+    seoTitle: 'Como melhorar estabilidade da internet para jogar | PC Game Test',
+    description:
+      'Veja como melhorar estabilidade, reduzir perdas de conexão e evitar travamentos em jogos online.',
+    category: 'Conexão',
+    readTime: '6 min de leitura',
+    image: estabilidadeImage,
+    imageAspectRatio: '3 / 2',
+    date: '2026-05-07',
+    author: 'Equipe PC Game Test',
+    visual: 'network',
+    topics: ['optimization', 'network', 'ping', 'lag', 'performance'],
+    contentSections: [
+      {
+        heading: 'O que causa instabilidade?',
+        paragraphs: [
+          'Instabilidade em jogos online aparece quando a conexão não mantém um fluxo previsível de dados. Ela pode vir de Wi-Fi fraco, interferência, roteador saturado, upload no limite, rota ruim do provedor, servidor distante ou perda de pacotes. O problema nem sempre é velocidade baixa.',
+          'Em partidas competitivas, pequenas oscilações já incomodam. Um download pode continuar rápido enquanto o jogo sofre com picos de latência. Por isso, a análise precisa olhar ping, jitter, perda de pacotes e uso da rede na casa, não apenas o resultado de um teste de velocidade.',
+        ],
+      },
+      {
+        heading: 'Perda de pacotes',
+        paragraphs: [
+          'Perda de pacotes acontece quando parte das informações enviadas entre seu PC e o servidor não chega corretamente. Nos jogos, isso pode virar rubber banding, tiros sem registro, personagem voltando de posição, inimigos teleportando ou comandos que parecem ignorados.',
+          'Use os indicadores de rede do próprio jogo quando disponíveis. Uma perda pequena, mas constante, já pode atrapalhar mais do que um ping um pouco alto. Se a perda aparece só no Wi-Fi, o foco é rede local. Se aparece por cabo, em vários dispositivos e horários, pode haver problema no modem, roteador ou provedor.',
+        ],
+      },
+      {
+        heading: 'Roteador influencia?',
+        paragraphs: [
+          'Influencia bastante. Roteadores antigos ou de entrada podem sofrer quando há muitos dispositivos, chamadas de vídeo, streaming e downloads ao mesmo tempo. CPU fraca, pouca memória, firmware antigo e aquecimento também podem causar travadas e perda de estabilidade.',
+          'Posicionamento importa no Wi-Fi: deixe o roteador em local aberto, alto e longe de obstáculos densos. Reiniciar de vez em quando pode aliviar travamentos temporários, mas se o problema volta sempre, vale revisar firmware, configuração, capacidade do aparelho ou a necessidade de um modelo melhor.',
+        ],
+      },
+      {
+        heading: 'Melhor canal Wi-Fi',
+        paragraphs: [
+          'Em 2.4 GHz, muitos roteadores e dispositivos disputam poucos canais, o que aumenta interferência. Em 5 GHz e 6 GHz, geralmente há mais espaço e menor latência, mas o alcance é menor. Para jogar, qualidade do sinal importa mais do que a barrinha cheia em um canto distante da casa.',
+          'Se o roteador permite, teste canais diferentes ou use a seleção automática com monitoramento. Evite deixar o PC conectado a repetidores simples quando o objetivo é competitivo, porque eles podem melhorar alcance visual, mas aumentar atraso. Mesh de boa qualidade pode ajudar, mas cabo ainda é mais previsível.',
+        ],
+      },
+      {
+        heading: 'Cabo de rede vale a pena?',
+        paragraphs: [
+          'Vale, principalmente para desktop e partidas competitivas. O cabo reduz interferência, quedas rápidas de sinal e variação de latência entre o PC e o roteador. Um cabo Cat5e ou Cat6 em bom estado já é suficiente para a maioria dos planos domésticos e setups gamer.',
+          'Cabo não resolve servidor longe nem rota ruim do provedor, mas elimina uma fonte comum de instabilidade. Se o PC fica longe do roteador, avalie passar um cabo maior, usar canaletas ou testar adaptador USB Ethernet em notebooks. Powerline pode funcionar em algumas casas, mas depende muito da instalação elétrica.',
+        ],
+      },
+      {
+        heading: 'Configurações importantes',
+        paragraphs: [
+          'Pause atualizações automáticas, sincronização de nuvem, torrents, uploads de vídeo e backups durante partidas. Upload saturado é um dos grandes causadores de ping variando. Se o roteador tiver QoS ou controle inteligente de fila, configure com cuidado para priorizar jogos sem bloquear o resto da rede.',
+          'Mantenha drivers de rede e firmware do roteador atualizados, mas evite mexer em opções avançadas sem saber o impacto. Abrir portas, alterar NAT ou usar DMZ não deve ser feito como tentativa aleatória de reduzir ping. Segurança e estabilidade vêm antes de qualquer ajuste agressivo.',
+        ],
+      },
+      {
+        heading: 'Como evitar oscilações',
+        paragraphs: [
+          'Crie uma rotina simples: jogue por cabo quando possível, feche tráfego pesado, escolha servidores próximos, mantenha o roteador ventilado e acompanhe métricas dentro do jogo. Se as oscilações acontecem sempre em horários de pico, anote dias e horários para conversar com o provedor com dados concretos.',
+          'Também separe problemas de internet de problemas do PC. Travamentos por temperatura, falta de RAM, jogo em HD ou CPU no limite podem parecer instabilidade online. Use o teste do PC, confira os jogos analisados e veja upgrades recomendados apenas quando o gargalo de hardware estiver claro.',
+        ],
+      },
+    ],
+  },
   {
     slug: 'como-aumentar-fps-em-jogos',
     title: 'Como aumentar FPS em jogos',
