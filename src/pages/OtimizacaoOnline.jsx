@@ -1,7 +1,10 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Footer from '../components/Footer'
 import Header from '../components/Header'
 import SEOHead from '../components/SEOHead'
+import { supabase } from '../lib/supabaseClient'
+import { hasFeedbackSent, saveFeedbackSent } from '../utils/feedbackStorage'
 import '../styles/staticPages.css'
 import '../styles/otimizacaoOnline.css'
 
@@ -52,6 +55,151 @@ const tips = [
   'Reinicie modem e roteador quando notar perda de pacote recorrente.',
   'Mantenha drivers de rede atualizados e evite muitos dispositivos usando a conexão ao mesmo tempo.',
 ]
+
+const interestPage = '/otimizacao-online'
+
+const interestOptions = [
+  {
+    label: 'Tenho interesse',
+    value: 'interessado',
+    rating: 5,
+  },
+  {
+    label: 'Talvez',
+    value: 'talvez',
+    rating: 3,
+  },
+  {
+    label: 'Não tenho interesse',
+    value: 'sem-interesse',
+    rating: 1,
+  },
+]
+
+function OptimizationInterestBlock() {
+  const [selectedOption, setSelectedOption] = useState(null)
+  const [message, setMessage] = useState('')
+  const [status, setStatus] = useState(() =>
+    hasFeedbackSent(interestPage) ? 'submitted' : 'idle',
+  )
+
+  const handleSelectOption = (option) => {
+    setSelectedOption(option)
+    setStatus('idle')
+  }
+
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+
+    if (!selectedOption) {
+      return
+    }
+
+    if (hasFeedbackSent(interestPage)) {
+      setStatus('submitted')
+      return
+    }
+
+    setStatus('submitting')
+
+    try {
+      if (!supabase) {
+        throw new Error('Supabase environment variables are missing.')
+      }
+
+      const { error } = await supabase.from('feedbacks').insert({
+        page: interestPage,
+        category: 'otimizacao-online',
+        type: 'interesse',
+        message: message.trim() || null,
+        rating: selectedOption.rating,
+      })
+
+      if (error) {
+        throw error
+      }
+
+      saveFeedbackSent(interestPage)
+      setMessage('')
+      setStatus('submitted')
+    } catch {
+      setStatus('error')
+    }
+  }
+
+  if (status === 'submitted') {
+    return (
+      <section
+        className="optimization-interest-card is-submitted"
+        aria-live="polite"
+      >
+        <p>Obrigado! Seu feedback ajuda a decidir os próximos recursos.</p>
+      </section>
+    )
+  }
+
+  return (
+    <section
+      className="optimization-interest-card"
+      aria-labelledby="optimization-interest-title"
+    >
+      <div className="optimization-interest-copy">
+        <p className="optimization-kicker">FEEDBACK RÁPIDO</p>
+        <h2 id="optimization-interest-title">
+          Quer ser avisado quando essa área estiver pronta?
+        </h2>
+        <p>
+          Estamos preparando recursos e recomendações para melhorar
+          estabilidade, ping e conexão em jogos online.
+        </p>
+      </div>
+
+      <form className="optimization-interest-form" onSubmit={handleSubmit}>
+        <p className="optimization-interest-options-title">Opções rápidas:</p>
+        <div className="optimization-interest-options" aria-label="Opções rápidas">
+          {interestOptions.map((option) => (
+            <button
+              className={
+                selectedOption?.value === option.value ? 'is-selected' : ''
+              }
+              type="button"
+              key={option.value}
+              onClick={() => handleSelectOption(option)}
+              aria-pressed={selectedOption?.value === option.value}
+            >
+              {option.label}
+            </button>
+          ))}
+        </div>
+
+        <label htmlFor="optimization-interest-message">
+          Quer deixar uma sugestão?
+        </label>
+        <textarea
+          id="optimization-interest-message"
+          value={message}
+          onChange={(event) => setMessage(event.target.value)}
+          placeholder="Conte rapidamente o que você gostaria de ver nessa área..."
+          rows={4}
+        />
+
+        <div className="optimization-interest-footer">
+          {status === 'error' && (
+            <span role="status">
+              Não foi possível enviar agora. Tente novamente em instantes.
+            </span>
+          )}
+          <button
+            type="submit"
+            disabled={!selectedOption || status === 'submitting'}
+          >
+            {status === 'submitting' ? 'Enviando...' : 'Enviar'}
+          </button>
+        </div>
+      </form>
+    </section>
+  )
+}
 
 function OtimizacaoOnline() {
   return (
@@ -191,6 +339,8 @@ function OtimizacaoOnline() {
             Parcerias em breve
           </button>
         </section>
+
+        <OptimizationInterestBlock />
       </main>
 
       <Footer />

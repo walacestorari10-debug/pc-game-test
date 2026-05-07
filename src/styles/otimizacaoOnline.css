@@ -563,10 +563,216 @@
   opacity: 0.9;
 }
 
+.optimization-interest-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(300px, 0.58fr);
+  gap: 28px;
+  align-items: start;
+  margin-top: 18px;
+  overflow: hidden;
+  padding: 30px;
+  border: 1px solid rgba(248, 113, 113, 0.3);
+  border-radius: 12px;
+  background:
+    radial-gradient(circle at 8% 18%, rgba(124, 58, 237, 0.2), transparent 30%),
+    radial-gradient(circle at 90% 58%, rgba(239, 68, 68, 0.22), transparent 34%),
+    linear-gradient(135deg, rgba(7, 10, 19, 0.96), rgba(30, 41, 59, 0.72));
+  box-shadow:
+    0 24px 62px rgba(0, 0, 0, 0.28),
+    0 0 34px rgba(239, 68, 68, 0.12);
+  animation: optimizationSectionEnter 700ms 240ms cubic-bezier(0.19, 1, 0.22, 1) both;
+}
+
+.optimization-interest-card::before {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(122deg, transparent 0 68%, rgba(248, 113, 113, 0.18) 68% 68.35%, transparent 68.35%),
+    linear-gradient(122deg, transparent 0 82%, rgba(168, 85, 247, 0.16) 82% 82.35%, transparent 82.35%),
+    radial-gradient(circle at 12% 18%, rgba(248, 113, 113, 0.14) 0 1px, transparent 2px);
+  background-size: auto, auto, 15px 15px;
+  content: "";
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+.optimization-interest-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.optimization-interest-copy {
+  display: grid;
+  gap: 12px;
+}
+
+.optimization-interest-copy h2 {
+  max-width: 680px;
+  margin: 0;
+  color: #fff;
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 950;
+  line-height: 1.08;
+}
+
+.optimization-interest-copy p {
+  margin: 0;
+  color: rgba(226, 232, 240, 0.9);
+  line-height: 1.68;
+}
+
+.optimization-interest-form {
+  display: grid;
+  gap: 12px;
+  padding: 18px;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  border-radius: 10px;
+  background: rgba(2, 6, 23, 0.5);
+  box-shadow: inset 0 0 24px rgba(248, 113, 113, 0.05);
+}
+
+.optimization-interest-options-title,
+.optimization-interest-form label {
+  margin: 0;
+  color: #fecaca;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.optimization-interest-options {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.optimization-interest-options button {
+  min-height: 46px;
+  padding: 0 12px;
+  border: 1px solid rgba(248, 113, 113, 0.26);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(15, 23, 42, 0.92), rgba(69, 10, 10, 0.34)),
+    rgba(7, 10, 19, 0.84);
+  color: #f8fafc;
+  font-size: 12px;
+  font-weight: 950;
+  line-height: 1.2;
+  text-transform: uppercase;
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.optimization-interest-options button:hover {
+  border-color: rgba(248, 113, 113, 0.58);
+  box-shadow: 0 0 22px rgba(239, 68, 68, 0.16);
+  transform: translateY(-1px);
+}
+
+.optimization-interest-options button.is-selected {
+  border-color: rgba(254, 202, 202, 0.74);
+  background: linear-gradient(135deg, #ef4444, #7c3aed);
+  box-shadow:
+    0 12px 28px rgba(239, 68, 68, 0.2),
+    0 0 24px rgba(124, 58, 237, 0.16);
+}
+
+.optimization-interest-form textarea {
+  width: 100%;
+  min-height: 112px;
+  resize: vertical;
+  padding: 13px 14px;
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  border-radius: 8px;
+  background: rgba(2, 6, 23, 0.72);
+  color: #f8fafc;
+  font: inherit;
+  line-height: 1.5;
+}
+
+.optimization-interest-form textarea:focus {
+  outline: 2px solid rgba(248, 113, 113, 0.32);
+  outline-offset: 2px;
+  border-color: rgba(248, 113, 113, 0.64);
+}
+
+.optimization-interest-form textarea::placeholder {
+  color: #94a3b8;
+}
+
+.optimization-interest-footer {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.optimization-interest-footer span {
+  color: #fecaca;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+.optimization-interest-footer button {
+  min-width: 118px;
+  min-height: 46px;
+  padding: 0 20px;
+  border: 1px solid rgba(254, 202, 202, 0.38);
+  border-radius: 8px;
+  background: linear-gradient(135deg, #ef4444, #7c3aed);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 950;
+  text-transform: uppercase;
+  box-shadow:
+    0 16px 34px rgba(239, 68, 68, 0.18),
+    0 0 24px rgba(124, 58, 237, 0.14);
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.optimization-interest-footer button:hover:not(:disabled) {
+  box-shadow:
+    0 18px 38px rgba(0, 0, 0, 0.3),
+    0 0 30px rgba(239, 68, 68, 0.24);
+  transform: translateY(-1px);
+}
+
+.optimization-interest-footer button:disabled {
+  cursor: not-allowed;
+  opacity: 0.54;
+}
+
+.optimization-interest-card.is-submitted {
+  display: grid;
+  min-height: 130px;
+  place-items: center;
+  border-color: rgba(34, 197, 94, 0.48);
+  background:
+    radial-gradient(circle at 50% 50%, rgba(34, 197, 94, 0.18), transparent 34%),
+    linear-gradient(135deg, rgba(2, 6, 23, 0.98), rgba(8, 47, 73, 0.74));
+  text-align: center;
+}
+
+.optimization-interest-card.is-submitted p {
+  max-width: 620px;
+  margin: 0;
+  color: #dcfce7;
+  font-size: 20px;
+  font-weight: 900;
+  line-height: 1.4;
+}
+
 @media (max-width: 920px) {
   .optimization-hero,
   .optimization-grid,
-  .optimization-partner-card {
+  .optimization-partner-card,
+  .optimization-interest-card {
     grid-template-columns: 1fr;
   }
 
@@ -586,7 +792,8 @@
 @media (max-width: 560px) {
   .optimization-hero,
   .optimization-content-card,
-  .optimization-partner-card {
+  .optimization-partner-card,
+  .optimization-interest-card {
     padding: 22px;
     border-radius: 14px;
   }
@@ -605,8 +812,22 @@
 
   .optimization-cta-row,
   .optimization-cta-row a,
-  .optimization-partner-card button {
+  .optimization-partner-card button,
+  .optimization-interest-footer button {
     width: 100%;
+  }
+
+  .optimization-interest-form {
+    padding: 14px;
+  }
+
+  .optimization-interest-options {
+    grid-template-columns: 1fr;
+  }
+
+  .optimization-interest-footer {
+    align-items: stretch;
+    flex-direction: column;
   }
 
   .optimization-content-card {
@@ -625,7 +846,8 @@
   .optimization-grid,
   .optimization-signal-card,
   .optimization-content-card,
-  .optimization-partner-card {
+  .optimization-partner-card,
+  .optimization-interest-card {
     opacity: 1;
     transform: none;
     animation: none;
@@ -634,7 +856,10 @@
   .optimization-cta-row a,
   .optimization-signal-card,
   .optimization-content-card,
-  .optimization-partner-card {
+  .optimization-partner-card,
+  .optimization-interest-card,
+  .optimization-interest-options button,
+  .optimization-interest-footer button {
     transform: none;
     transition: none;
   }
