@@ -13,6 +13,7 @@ const publicStaticRoutes = [
   '/jogos',
   '/artigos',
   '/upgrades',
+  '/otimizacao-online',
   '/promocoes',
   '/como-funciona',
   '/contato',

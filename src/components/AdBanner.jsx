@@ -1,39 +1,35 @@
-import { useState } from 'react'
+import { Link } from 'react-router-dom'
+
+const optimizationBullets = [
+  'Redução de ping e rotas instáveis',
+  'Mais estabilidade em partidas online',
+  'Ideal para jogos competitivos',
+  'Integrações gamer em breve',
+]
 
 function AdBanner() {
-  const [message, setMessage] = useState('')
-
   return (
-    <section className="ad-banner" aria-label="Banner promocional visual">
+    <section className="ad-banner" aria-label="Otimização online gamer">
       <div className="ad-copy">
         <span>OTIMIZAÇÃO ONLINE</span>
         <small>Parceria em breve</small>
-        <strong>JOGUE COM MAIS ESTABILIDADE</strong>
-        <p>Área reservada para serviços de conexão gamer.</p>
+        <strong>Jogue com mais estabilidade</strong>
+        <p>
+          Área dedicada a serviços de conexão gamer, redução de ping e melhoria
+          de rota para jogos online.
+        </p>
       </div>
+
       <ul>
-        <li>Redução de rota e ping</li>
-        <li>Conexão mais estável</li>
-        <li>Perfil para jogos online</li>
-        <li>Parceria gamer em breve</li>
+        {optimizationBullets.map((bullet) => (
+          <li key={bullet}>{bullet}</li>
+        ))}
       </ul>
+
       <div className="ad-action-wrap">
-        <button
-          className="ad-button"
-          type="button"
-          onClick={() =>
-            setMessage(
-              'Serviços de otimização de conexão serão adicionados em breve.',
-            )
-          }
-        >
-          EM BREVE
-        </button>
-        {message && (
-          <small className="affiliate-feedback" role="status">
-            {message}
-          </small>
-        )}
+        <Link className="ad-button" to="/otimizacao-online">
+          Saiba mais
+        </Link>
       </div>
       <div className="ad-character" aria-hidden="true" />
     </section>
