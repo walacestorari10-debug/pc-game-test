@@ -29,6 +29,13 @@ const demandCurves = {
   muito_pesado: 1.15,
 }
 
+const estimationModeDescriptions = {
+  conservative: 'Estimativa segura, considerando cenários mais pesados.',
+  balanced: 'Estimativa média para uso normal.',
+  optimized:
+    'Considera drivers atualizados, sistema otimizado e tecnologias como DLSS/FSR quando disponíveis.',
+}
+
 function clamp(value, min, max) {
   return Math.min(Math.max(value, min), max)
 }
@@ -77,6 +84,96 @@ function getFpsRange(averageFps) {
     min: Math.max(10, roundToNearest(averageFps - spread)),
     max: Math.max(15, roundToNearest(averageFps + spread)),
   }
+}
+
+function getRangeFromCenter(averageFps, spreadRatio = 0.1) {
+  const spread = clamp(Math.round(averageFps * spreadRatio), 7, 28)
+
+  return {
+    min: Math.max(10, roundToNearest(averageFps - spread)),
+    max: Math.max(15, roundToNearest(averageFps + spread)),
+  }
+}
+
+function getModernGpuFeatureFactor(gpuName = '') {
+  const normalizedName = gpuName.toUpperCase()
+
+  if (/RTX\s*(30|40|50)/.test(normalizedName)) {
+    return 1
+  }
+
+  if (/RX\s*(6|7|9)\d{3}/.test(normalizedName)) {
+    return 0.8
+  }
+
+  if (normalizedName.includes('ARC')) {
+    return 0.7
+  }
+
+  return 0
+}
+
+function getHardwareOptimizationHeadroom(scores, parts) {
+  const gpuHeadroom = clamp((scores.gpu - 70) / 30, 0, 1)
+  const cpuHeadroom = clamp((scores.cpu - 78) / 22, 0, 1)
+  const ramHeadroom = clamp((scores.ram - 68) / 28, 0, 1)
+  const storageHeadroom = clamp((scores.storage - 68) / 28, 0, 1)
+  const modernGpuFeatureFactor = getModernGpuFeatureFactor(parts.gpu.name)
+
+  return clamp(
+    gpuHeadroom * 0.46 +
+      cpuHeadroom * 0.22 +
+      ramHeadroom * 0.12 +
+      storageHeadroom * 0.08 +
+      modernGpuFeatureFactor * 0.12,
+    0,
+    1,
+  )
+}
+
+function getFpsEstimationModes(averageFps, fpsRange, scores, parts, game) {
+  const hardwareHeadroom = getHardwareOptimizationHeadroom(scores, parts)
+  const demandOptimizationFactor =
+    game.demandLevel === 'muito_pesado'
+      ? 1
+      : game.demandLevel === 'pesado'
+        ? 0.86
+        : 0.68
+  const balancedMultiplier = 1 + 0.07 + hardwareHeadroom * 0.1
+  const optimizedMultiplier =
+    1 + 0.15 + hardwareHeadroom * 0.22 * demandOptimizationFactor
+  const balancedAverageFps = Math.max(
+    fpsRange.max,
+    Math.round(averageFps * balancedMultiplier),
+  )
+  const optimizedAverageFps = Math.max(
+    balancedAverageFps + 4,
+    Math.round(averageFps * optimizedMultiplier),
+  )
+
+  return [
+    {
+      key: 'conservative',
+      label: 'Conservador',
+      description: estimationModeDescriptions.conservative,
+      averageFps,
+      range: fpsRange,
+    },
+    {
+      key: 'balanced',
+      label: 'Balanceado',
+      description: estimationModeDescriptions.balanced,
+      averageFps: balancedAverageFps,
+      range: getRangeFromCenter(balancedAverageFps, 0.1),
+    },
+    {
+      key: 'optimized',
+      label: 'Otimizado',
+      description: estimationModeDescriptions.optimized,
+      averageFps: optimizedAverageFps,
+      range: getRangeFromCenter(optimizedAverageFps, 0.09),
+    },
+  ]
 }
 
 function getStatus(averageFps, game) {
@@ -206,6 +303,13 @@ export function calculatePcPerformance(setup, gameSlug = 'warzone') {
   const overallScore = Math.round(getAdjustedScore(baseOverallScore, setup))
   const averageFps = getAverageFps(baseOverallScore, setup, game)
   const fpsRange = getFpsRange(averageFps)
+  const fpsEstimationModes = getFpsEstimationModes(
+    averageFps,
+    fpsRange,
+    scores,
+    parts,
+    game,
+  )
   const status = getStatus(averageFps, game)
   const idealQuality = getIdealQuality(baseOverallScore, setup, game)
   const bottleneckResult = getBottleneck(scores, parts)
@@ -215,6 +319,7 @@ export function calculatePcPerformance(setup, gameSlug = 'warzone') {
     overallScore,
     baseOverallScore: Math.round(baseOverallScore),
     fpsRange,
+    fpsEstimationModes,
     averageFps,
     status,
     idealQuality,

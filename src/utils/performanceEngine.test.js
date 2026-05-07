@@ -47,6 +47,22 @@ function expectValidFpsRange(result) {
   expect(result.averageFps).toBeLessThanOrEqual(result.fpsRange.max)
 }
 
+function expectValidEstimationModes(result) {
+  expect(result.fpsEstimationModes).toHaveLength(3)
+  expect(result.fpsEstimationModes.map((mode) => mode.key)).toEqual([
+    'conservative',
+    'balanced',
+    'optimized',
+  ])
+  expect(result.fpsEstimationModes[0].range).toEqual(result.fpsRange)
+  expect(result.fpsEstimationModes[1].averageFps).toBeGreaterThanOrEqual(
+    result.fpsEstimationModes[0].averageFps,
+  )
+  expect(result.fpsEstimationModes[2].averageFps).toBeGreaterThan(
+    result.fpsEstimationModes[1].averageFps,
+  )
+}
+
 describe('calculatePcPerformance', () => {
   it('returns low or playable status for a weak PC in a heavy game', () => {
     const result = calculatePcPerformance(weakSetup, 'cyberpunk-2077')
@@ -64,6 +80,7 @@ describe('calculatePcPerformance', () => {
     expect(result.overallScore).toBeGreaterThanOrEqual(60)
     expect(result.overallScore).toBeLessThanOrEqual(85)
     expectValidFpsRange(result)
+    expectValidEstimationModes(result)
   })
 
   it('returns great status for a strong PC in a light game', () => {
@@ -78,6 +95,34 @@ describe('calculatePcPerformance', () => {
     const result = calculatePcPerformance(midSetup, 'warzone')
 
     expectValidFpsRange(result)
+  })
+
+  it('returns conservative, balanced and optimized FPS estimation modes', () => {
+    const result = calculatePcPerformance(strongSetup, 'cyberpunk-2077')
+
+    expectValidEstimationModes(result)
+    expect(result.fpsEstimationModes[0].description).toContain(
+      'cen\u00e1rios mais pesados',
+    )
+    expect(result.fpsEstimationModes[2].description).toContain('DLSS/FSR')
+  })
+
+  it('gives high-end hardware more optimized headroom without changing the conservative base', () => {
+    const highEndSetup = {
+      cpu: 'Intel Core i5-13600K',
+      gpu: 'RTX 3080',
+      ram: '32GB DDR4',
+      storage: 'SSD NVMe 2TB',
+      resolution: '1080p',
+      quality: 'Alta',
+    }
+    const result = calculatePcPerformance(highEndSetup, 'warzone')
+
+    expect(result.fpsEstimationModes[0].averageFps).toBe(result.averageFps)
+    expect(result.fpsEstimationModes[2].averageFps).toBeGreaterThan(
+      result.averageFps + 15,
+    )
+    expect(result.bottleneck).not.toBe('Processador')
   })
 
   it('keeps overallScore between 0 and 100 across different setups', () => {

@@ -9,6 +9,7 @@ import Header from '../components/Header'
 import SEOHead from '../components/SEOHead'
 import { games } from '../data/games'
 import { getUpgradeRecommendations } from '../data/upgradeRecommendations'
+import { supabase } from '../lib/supabaseClient'
 import { calculatePcPerformance } from '../utils/performanceEngine'
 import { notifyPcGameTestUpdated } from '../utils/storageEvents'
 import apexImage from '../assets/images/thumbnails/apexlegends-card.webp'
@@ -39,6 +40,27 @@ const confidenceBadges = [
   'Simulação de desempenho',
 ]
 
+const fpsEstimateDisclaimer =
+  'Este resultado é uma estimativa baseada em modelo interno de desempenho. O FPS real pode variar conforme drivers, temperatura, versão do jogo, DLSS/FSR, Ray Tracing, resolução, qualidade gráfica e otimizações do sistema.'
+
+const accuracyFeedbackOptions = [
+  {
+    type: 'close',
+    icon: '👍',
+    label: 'Sim, ficou próximo',
+  },
+  {
+    type: 'better',
+    icon: '⬆️',
+    label: 'Meu PC roda melhor',
+  },
+  {
+    type: 'worse',
+    icon: '⬇️',
+    label: 'Meu PC roda pior',
+  },
+]
+
 const imageBySlug = {
   'apex-legends': apexImage,
   cs2: cs2Image,
@@ -63,6 +85,10 @@ const gradientBySlug = {
 
 function clamp(value, min, max) {
   return Math.min(Math.max(value, min), max)
+}
+
+function formatFpsRange(range) {
+  return `${range.min}-${range.max} FPS`
 }
 
 function useCountUp(targetValue, duration = 850, decimals = 0) {
@@ -255,6 +281,189 @@ function ScoreStat({ label, value }) {
   )
 }
 
+function FpsEstimationModes({ modes }) {
+  return (
+    <section className="resultado-fps-modes" aria-labelledby="resultado-fps-modes-title">
+      <div className="resultado-fps-modes-heading">
+        <p className="resultado-kicker">FPS estimado</p>
+        <h3 id="resultado-fps-modes-title">Leitura por cenário</h3>
+      </div>
+
+      <div className="resultado-fps-mode-list">
+        {modes.map((mode) => (
+          <article className={`resultado-fps-mode is-${mode.key}`} key={mode.key}>
+            <div>
+              <span>{mode.label}</span>
+              <strong>{formatFpsRange(mode.range)}</strong>
+            </div>
+            <p>{mode.description}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+function PerformanceAccuracyFeedback({ setup, selectedResult }) {
+  const [selectedType, setSelectedType] = useState(null)
+  const [reportedFps, setReportedFps] = useState('')
+  const [message, setMessage] = useState('')
+  const [status, setStatus] = useState('idle')
+  const [errorMessage, setErrorMessage] = useState('')
+  const needsReportedFps = selectedType === 'better' || selectedType === 'worse'
+  const estimatedFps =
+    selectedResult.fpsEstimationModes?.[0]?.averageFps ?? selectedResult.averageFps
+
+  const submitFeedback = async (feedbackType, fpsValue = reportedFps) => {
+    const numericFps = fpsValue ? Math.round(Number(fpsValue)) : null
+
+    if ((feedbackType === 'better' || feedbackType === 'worse') && !numericFps) {
+      setErrorMessage('Informe o FPS real para calibrarmos melhor.')
+      return
+    }
+
+    setStatus('submitting')
+    setErrorMessage('')
+
+    try {
+      if (!supabase) {
+        throw new Error('Supabase environment variables are missing.')
+      }
+
+      const page =
+        typeof window === 'undefined' ? '/resultado' : window.location.pathname
+      const { error } = await supabase.from('performance_feedbacks').insert({
+        page,
+        cpu: setup.cpu,
+        gpu: setup.gpu,
+        ram: setup.ram,
+        storage: setup.storage,
+        game: selectedResult.game.slug,
+        estimated_fps: estimatedFps,
+        reported_fps: numericFps,
+        difference: numericFps === null ? null : numericFps - estimatedFps,
+        feedback_type: feedbackType,
+        message: message.trim() || null,
+      })
+
+      if (error) {
+        throw error
+      }
+
+      setStatus('submitted')
+      setReportedFps('')
+      setMessage('')
+    } catch {
+      setStatus('error')
+      setErrorMessage('Não foi possível enviar agora.')
+    }
+  }
+
+  const handleSelect = (type) => {
+    setSelectedType(type)
+    setStatus('idle')
+    setErrorMessage('')
+
+    if (type === 'close') {
+      submitFeedback(type, '')
+    }
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
+
+    if (!selectedType) {
+      return
+    }
+
+    submitFeedback(selectedType)
+  }
+
+  if (status === 'submitted') {
+    return (
+      <section className="resultado-accuracy-card is-submitted" aria-live="polite">
+        <span aria-hidden="true">✓</span>
+        <div>
+          <strong>Feedback registrado</strong>
+          <p>Obrigado. Esses dados ajudam a calibrar o modelo com uso real.</p>
+        </div>
+      </section>
+    )
+  }
+
+  return (
+    <section className="resultado-accuracy-card" aria-labelledby="accuracy-title">
+      <div className="resultado-accuracy-heading">
+        <p className="resultado-kicker">Precisão do teste</p>
+        <h2 id="accuracy-title">O resultado bateu com seu desempenho real?</h2>
+      </div>
+
+      <div className="resultado-accuracy-options">
+        {accuracyFeedbackOptions.map((option) => (
+          <button
+            className={selectedType === option.type ? 'is-selected' : ''}
+            type="button"
+            disabled={status === 'submitting'}
+            onClick={() => handleSelect(option.type)}
+            aria-pressed={selectedType === option.type}
+            key={option.type}
+          >
+            <span aria-hidden="true">{option.icon}</span>
+            {option.label}
+          </button>
+        ))}
+      </div>
+
+      {needsReportedFps && (
+        <form className="resultado-accuracy-form" onSubmit={handleSubmit}>
+          <label htmlFor="reported-fps">
+            Quantos FPS você costuma pegar nesse jogo?
+          </label>
+          <input
+            id="reported-fps"
+            min="1"
+            max="1000"
+            inputMode="numeric"
+            type="number"
+            value={reportedFps}
+            onChange={(event) => setReportedFps(event.target.value)}
+            placeholder="FPS real"
+            required
+          />
+
+          <label htmlFor="performance-feedback-message">
+            Quer deixar uma observação?
+          </label>
+          <textarea
+            id="performance-feedback-message"
+            value={message}
+            onChange={(event) => setMessage(event.target.value)}
+            placeholder="Ex.: uso DLSS qualidade, driver atualizado, jogo em 1440p..."
+            rows={3}
+          />
+
+          <div className="resultado-accuracy-footer">
+            {errorMessage && (
+              <span className="resultado-accuracy-error" role="status">
+                {errorMessage}
+              </span>
+            )}
+            <button type="submit" disabled={status === 'submitting'}>
+              {status === 'submitting' ? 'Enviando...' : 'Enviar precisão'}
+            </button>
+          </div>
+        </form>
+      )}
+
+      {!needsReportedFps && errorMessage && (
+        <span className="resultado-accuracy-error" role="status">
+          {errorMessage}
+        </span>
+      )}
+    </section>
+  )
+}
+
 function ComponentBar({ name, value, isAnimated }) {
   return (
     <div className="resultado-component-row">
@@ -365,7 +574,7 @@ function ResultContent({ setup, selectedResult }) {
     ['FPS médio', animatedAverageFps],
     [
       'FPS estimado',
-      `${selectedResult.fpsRange.min}-${selectedResult.fpsRange.max}`,
+      formatFpsRange(selectedResult.fpsRange).replace(' FPS', ''),
     ],
     ['Status', selectedResult.status],
   ]
@@ -477,6 +686,10 @@ function ResultContent({ setup, selectedResult }) {
                   <ScoreStat label={label} value={value} key={label} />
                 ))}
               </div>
+              <FpsEstimationModes modes={selectedResult.fpsEstimationModes} />
+              <p className="resultado-estimate-disclaimer">
+                {fpsEstimateDisclaimer}
+              </p>
               <FpsEstimateNotice className="resultado-fps-note" />
             </div>
           </section>
@@ -631,10 +844,13 @@ function ResultContent({ setup, selectedResult }) {
         </section>
 
         <section className="resultado-transparency-card">
-          Os resultados apresentados são estimativas baseadas em benchmarks
-          públicos e podem variar conforme drivers, temperatura, otimização do
-          sistema e atualizações dos jogos.
+          {fpsEstimateDisclaimer}
         </section>
+
+        <PerformanceAccuracyFeedback
+          setup={setup}
+          selectedResult={selectedResult}
+        />
 
         <section className="resultado-actions" aria-label="Ações do resultado">
           <Link className="resultado-action resultado-action-primary" to="/teste">
